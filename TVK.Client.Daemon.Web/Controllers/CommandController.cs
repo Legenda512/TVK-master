@@ -19,8 +19,7 @@ namespace TVK.Client.Daemon.Web.Controllers
         {
 
             var result = await Cli.Wrap(request.Command).ExecuteAsync();
-            HttpContext.Response.Body.Write(Encoding.UTF8.GetBytes("result"));
-            Console.WriteLine();
+            //HttpContext.Response.Body.Write(Encoding.UTF8.GetBytes("result"));
             return Ok(result.StandardOutput); //попробовать вывести в консоль или файл
 
             

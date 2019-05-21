@@ -1,0 +1,30 @@
+﻿@model TVK.Web.ViewModels.Interval
+@{
+    ViewData["Title"] = "Графики";
+}
+
+<form asp-action="LineCommandData" asp-controller="Сharts" asp-anti-forgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly" />
+    <div>
+        <div class="form-group">
+            <label asp-for="StartDate">Введите начальную дату</label>
+            <input type="text" name="StartDate" asp-for="StartDate" />
+            <span asp-validation-for="StartDate" />
+        </div>
+        <div class="form-group">
+            <label asp-for="FinishDate">Введите конечную дату</label>
+            <input type="text" name="FinishDate" asp-for="FinishDate" />
+            <span asp-validation-for="FinishDate" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Построить" class="btn" />
+        </div>
+    </div>
+</form>
+
+
+<a asp-controller="Charts" asp-action="BarUser">График пользователей</a><br />
+<a asp-controller="Charts" asp-action="BarUserRoles">График пользователей по ролям</a><br />
+<a asp-controller="Charts" asp-action="PieCommand">Часто используемые команды</a><br />
+<a asp-controller="Charts" asp-action="LineCommandData">Команды по дате</a>
+

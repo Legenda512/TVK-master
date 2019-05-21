@@ -1,0 +1,74 @@
+﻿@model TVK.Web.testSQLContext
+@using Microsoft.EntityFrameworkCore;
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Профиль";
+}
+@{
+    testSQLContext db = new testSQLContext();
+    Users user = db.Users
+    .Include(t => t.Roles)
+        .ThenInclude(t => t.IdBackgroundroleNavigation)
+    .Include(t => t.PersonalInformation)
+    .Include(t => t.ContactInformation)
+    .Where(t => t.Email == User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value)
+    .FirstOrDefault();
+}
+
+<h1>Профиль</h1>
+
+@if (user.PersonalInformation.Count == 0)
+{
+    <a asp-action="PersonalInfromationuser" asp-controller="Account">Заполнить персональную информацию</a>
+}
+<br>
+<a asp-action="ContactInformmationuser" asp-controller="Account">Заполнить контактную информацию</a>
+<br>
+<a asp-action="IndexCharts" asp-controller="Charts">Построить графики</a>
+
+<table>
+    <thead>
+        <tr><th>Пользователь</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Ник пользователя: </td><td>@user.Nameusers</td></tr>
+        <tr><td>Email: </td><td>@user.Email</td></tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr><th>Персональная информация</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var personal in user.PersonalInformation)
+        {
+            <tr><td>Пол: </td><td>@personal.Gender</td></tr>
+            <tr><td>Возраст: </td><td>@personal.Age</td></tr>
+            <tr><td>Фамилия: </td><td>@personal.Lastname</td></tr>
+            <tr><td>Имя: </td><td>@personal.Firstname</td></tr>
+            <tr><td>Отчество: </td><td>@personal.Secondname</td></tr>
+
+        }
+        @foreach (var role in user.Roles)
+        {
+            <tr><td>Роль: </td><td>@role.IdBackgroundroleNavigation.DescriptionRole</td></tr>
+        }
+
+        @foreach (var contact in user.ContactInformation)
+        {
+            <tr><td>Контактная информация: </td><td>@contact.PhoneOrEmail</td></tr>
+            <tr><td>Комментарий: </td><td>@contact.Comment</td></tr>
+        }
+
+    </tbody>
+</table>
+
+<a asp-action="Logout" asp-controller="Account">Выйти</a>
+
+
+
+
+
+

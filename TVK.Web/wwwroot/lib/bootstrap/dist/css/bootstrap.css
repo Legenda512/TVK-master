@@ -9004,6 +9004,10 @@ a.text-dark:hover, a.text-dark:focus {
   }
   .table {
     border-collapse: collapse !important;
+	margin: auto;
+  }
+  mytable {
+	margin: auto;
   }
   .table td,
   .table th {

@@ -1,0 +1,47 @@
+﻿@model TVK.Web.ViewModels.PersonalInformationUserModel
+
+@{
+    ViewData["Title"] = "Персональная информация";
+}
+
+<h1>Персональная информация</h1>
+
+<form asp-action="PersonalInfromationuser" asp-controller="Account" asp-anti-forgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        <div>
+            <label asp-for="Gender">Введите пол</label><br />
+            <input type="text" asp-for="Gender" />
+            <span asp-validation-for="Gender" />
+        </div>
+
+        <div>
+            <label asp-for="Age">Введите возраст</label><br />
+            <input type="text" asp-for="Age" />
+            <span asp-validation-for="Age" />
+        </div>
+
+        <div>
+            <label asp-for="Lastname">Введите фамилию</label><br />
+            <input type="text" asp-for="Lastname" />
+            <span asp-validation-for="Lastname" />
+        </div>
+        <div>
+            <label asp-for="Firstname">Введите имя</label><br />
+            <input type="text" asp-for="Firstname" />
+            <span asp-validation-for="Firstname" />
+        </div>
+
+        <div>
+            <label asp-for="Secondname">Введите отчество</label><br />
+            <input type="text" asp-for="Secondname" />
+            <span asp-validation-for="Secondname" />
+        </div>
+
+        <div>
+            <input type="submit" value="Запомнить" />
+        </div>
+    </div>
+</form>
+
+

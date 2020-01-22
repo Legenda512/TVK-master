@@ -19,6 +19,7 @@ namespace TVK.Web
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://192.168.0.30:5050") //Использовать адрес по IP
                 .UseStartup<Startup>();
     }
 }

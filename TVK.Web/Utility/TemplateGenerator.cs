@@ -228,13 +228,17 @@ namespace TVK.Web.Utility
         }
 
 
-        public static string GetHTMLStringHistoryCommand()
+        public static string GetHTMLStringHistoryCommand(string StartDate, string FinishDate)
         {
             var comandlist = db.Command.ToList();
 
+            DateTime finishDate;
+            DateTime startDate;
 
+            startDate = DateTime.Parse(StartDate);
+            finishDate = DateTime.Parse(FinishDate);
 
-
+            finishDate = finishDate.AddDays(1.0);
 
             var sb = new StringBuilder();
             sb.Append(@"
@@ -253,28 +257,31 @@ namespace TVK.Web.Utility
 
             foreach (var command in comandlist)
             {
+                if (command.Time >= startDate && command.Time <= finishDate)
+                {
 
-                BackgroundCommand backgroundCommand = db.BackgroundCommand
+                    BackgroundCommand backgroundCommand = db.BackgroundCommand
                     .Where(t => t.IdBackgroundCommand == command.IdCommandBackgroundCommand)
                     .FirstOrDefault();
 
-                Users sender = db.Users
-                    .Where(t => t.IdUser == command.IdSender)
-                    .FirstOrDefault();
+                    Users sender = db.Users
+                        .Where(t => t.IdUser == command.IdSender)
+                        .FirstOrDefault();
 
-                Users recipient = db.Users
-                    .Where(t => t.IdUser == command.IdRecipient)
-                    .FirstOrDefault();
+                    Users recipient = db.Users
+                        .Where(t => t.IdUser == command.IdRecipient)
+                        .FirstOrDefault();
 
-                string sender_info = sender.Nameusers + " ID(" + sender.IdUser + ")";
-                string recipient_info = recipient.Nameusers + " ID(" + recipient.IdUser + ")";
+                    string sender_info = sender.Nameusers + " ID(" + sender.IdUser + ")";
+                    string recipient_info = recipient.Nameusers + " ID(" + recipient.IdUser + ")";
 
-                sb.AppendFormat(@"<tr>
+                    sb.AppendFormat(@"<tr>
                                     <td>{0}</td>
                                     <td>{1}</td>
                                     <td>{2}</td>
                                     <td>{3}</td>
                                   </tr>", sender_info, recipient_info, backgroundCommand.Command, command.Time);
+                }
             }
 
 

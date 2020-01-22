@@ -9,7 +9,6 @@ using TVK.Web.ViewModels;
 
 namespace TVK.Web.Controllers
 {
-    [Route ("Charts")]
     public class ChartsController : Controller
     {
         private testSQLContext db;
@@ -83,11 +82,23 @@ namespace TVK.Web.Controllers
         {
             DateTime finishDate;
             DateTime startDate;
-            //if (model.FinishDate == null || model.StartDate == null)
+            if (FinishDate == null || StartDate == null)
                 return RedirectToAction("IndexCharts", "Charts");
 
-            //startDate = DateTime.Parse(model.StartDate);
-            // finishDate = DateTime.Parse(model.FinishDate);
+
+            try
+            {
+
+                startDate = DateTime.Parse(StartDate);
+                finishDate = DateTime.Parse(FinishDate);
+                finishDate = finishDate.AddDays(1);
+            }
+            catch
+            {
+                return RedirectToAction("IndexCharts", "Charts");
+            }
+
+            
 
             List<Command> commands = db.Command.ToList();
 
@@ -102,7 +113,9 @@ namespace TVK.Web.Controllers
             var resultnew = result.GroupBy(x => x).OrderByDescending(x => x.Count());
             var lstModel = new List<SimpleReportViewModel>();
 
-            foreach(var time in resultnew)
+            
+
+            foreach (var time in resultnew)
             {
                 lstModel.Add(new SimpleReportViewModel
                 {
@@ -110,8 +123,10 @@ namespace TVK.Web.Controllers
                     Quantity = time.Count()
                 });
             }
-            
-            return View(lstModel);
+            var a = lstModel.OrderBy(x => DateTime.Parse(x.DimensionOne));
+            ViewData["XLabels"] = Newtonsoft.Json.JsonConvert.SerializeObject(a.Select(x => x.DimensionOne).ToList());
+            ViewData["YValues"] = Newtonsoft.Json.JsonConvert.SerializeObject(a.Select(x => x.Quantity).ToList());
+            return View(a);
         }
 
         public IActionResult PieCommand()

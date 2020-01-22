@@ -5,7 +5,7 @@
 
 @{
     ViewData["Title"] = "Главная";
-    var address = Model?.Address ?? "http://127.0.0.1:5000/api/command";
+    var address = Model?.Address ?? "http://192.168.56.1:5000/api/command";
     var command = Model?.Command ?? "hostname";
 
     testSQLContext db = new testSQLContext();

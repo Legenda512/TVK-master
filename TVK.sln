@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TVK.Web", "TVK.Web\TVK.Web.csproj", "{D9296092-2433-41FD-9543-8A89F2EE9E75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVK.Client.Daemon.Web", "TVK.Client.Daemon.Web\TVK.Client.Daemon.Web.csproj", "{FBBC6BAD-D6E9-464B-8232-0142A7D77E0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TVK.Client.Daemon.Web", "TVK.Client.Daemon.Web\TVK.Client.Daemon.Web.csproj", "{FBBC6BAD-D6E9-464B-8232-0142A7D77E0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenRecorder", "ScreenRecorder\ScreenRecorder.csproj", "{B9721D6B-A360-4CDD-BF4F-4010353A36B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{FBBC6BAD-D6E9-464B-8232-0142A7D77E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBBC6BAD-D6E9-464B-8232-0142A7D77E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBBC6BAD-D6E9-464B-8232-0142A7D77E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9721D6B-A360-4CDD-BF4F-4010353A36B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9721D6B-A360-4CDD-BF4F-4010353A36B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9721D6B-A360-4CDD-BF4F-4010353A36B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9721D6B-A360-4CDD-BF4F-4010353A36B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

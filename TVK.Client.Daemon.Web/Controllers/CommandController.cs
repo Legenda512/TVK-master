@@ -22,8 +22,7 @@ namespace TVK.Client.Daemon.Web.Controllers
             // HttpContext.Response.Body.Write(Encoding.UTF8.GetBytes("result"));
             return Ok(result.StandardOutput); //попробовать вывести в консоль или файл
 
-            
-
         }
     }
+
 }

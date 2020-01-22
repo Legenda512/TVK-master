@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TVK.Client.Daemon.Web.Models;
+using System.Diagnostics;
 
 namespace TVK.Client.Daemon.Web
 {
@@ -16,6 +19,7 @@ namespace TVK.Client.Daemon.Web
     {
         public Startup(IConfiguration configuration)
         {
+
             Configuration = configuration;
         }
 
@@ -30,11 +34,17 @@ namespace TVK.Client.Daemon.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            string myIP = RegisterIPMiddleware.GetIP(); // Получаем свой IP
+            using (HttpClient client = new HttpClient())
+            {
+                client.GetAsync("http://192.168.0.30:5050/registerIP?IP=" + myIP).Wait(); //Сообщаем серверу свой IP
+            }
+            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseMvc();
         }
     }

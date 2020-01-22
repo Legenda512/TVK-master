@@ -3,11 +3,11 @@ using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using TVK.Web.Utility;
 using System.IO;
+using System;
 
 namespace TVK.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+
     public class DocumentController : Controller
     {
         
@@ -200,8 +200,25 @@ namespace TVK.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreatePDF()
+        public IActionResult CreatePDF(string StartDate, string FinishDate)
         {
+
+            if (FinishDate == null || StartDate == null)
+                return RedirectToAction("IndexCharts", "Charts");
+            try
+            {
+                DateTime finishDate;
+                DateTime startDate;
+
+                startDate = DateTime.Parse(StartDate);
+                finishDate = DateTime.Parse(FinishDate);
+            }
+               catch
+            {
+                return RedirectToAction("IndexCharts", "Charts");
+            }
+
+
             var globalSettings = new GlobalSettings
             {
                 ColorMode = ColorMode.Color,
@@ -215,7 +232,7 @@ namespace TVK.Web.Controllers
             var objectSettings = new ObjectSettings
             {
                 PagesCount = true,
-                HtmlContent = TemplateGenerator.GetHTMLStringHistoryCommand(),
+                HtmlContent = TemplateGenerator.GetHTMLStringHistoryCommand(StartDate, FinishDate),
                 WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "assets", "styles.css") },
                 HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true }
                 //FooterSettings = { FontName = "Arial", FontSize = 9, Line = true, Center = "Report Footer" }

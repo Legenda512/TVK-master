@@ -100,7 +100,7 @@ namespace TVK.Web.Controllers
                 await db.SaveChangesAsync();
             };
 
-            Systeminfo systeminfo = new Systeminfo { };
+            Systeminfo systeminfo = new Systeminfo();
             if (tvkCommand.Command == "systeminfo")
             {
                 string[] info = tvkCommand.Data.Split(new char[] { ' ','\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);

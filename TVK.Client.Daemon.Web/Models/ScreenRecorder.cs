@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TVK.Web.Models
+namespace TVK.Client.Daemon.Web.Models
 {
     public class ScreenRecorder
     {

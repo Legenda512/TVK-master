@@ -17,6 +17,7 @@ namespace ScreenRecorder.Controllers
         private static string outputPath;
         static ScrRecorder screenRec;
         static CancellationTokenSource cancelSource = new CancellationTokenSource();
+        static bool thread = false;
 
         static homeController()
         
@@ -56,18 +57,21 @@ namespace ScreenRecorder.Controllers
         [Route("start")]
         public string start()
         {
-            
-            new Thread(() =>
+            if (thread == false)
             {
-                try
+                thread = true;
+                new Thread(() =>
                 {
-                    Work(cancelSource.Token).Wait();
-                }
-                catch (OperationCanceledException)
-                {
-                    Console.WriteLine("Canceled!");
-                }
-            }).Start();
+                    try
+                    {
+                        Work(cancelSource.Token).Wait();
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        Console.WriteLine("Canceled!");
+                    }
+                }).Start();
+            }
 
             return "";
         }
@@ -77,7 +81,7 @@ namespace ScreenRecorder.Controllers
         public string stop()
         {
             cancelSource.Cancel();
-
+            thread = false;
 
 
             return "";

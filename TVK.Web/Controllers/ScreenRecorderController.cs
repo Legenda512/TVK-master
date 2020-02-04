@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TVK.Web.Models;
 using Flurl.Http;
+using TVK.Client.Daemon.Web.Models;
 
 namespace TVK.Web.Controllers
 {
+    [Route("[controller]")]
     public class ScreenRecorderController : Controller
     {
         public IActionResult Index()
@@ -25,11 +27,7 @@ namespace TVK.Web.Controllers
                 throw new ArgumentNullException(nameof(ScreenRecorder));
             }
 
-            var req = new
-            {
-                command = ScreenRecorder.Command
-            };
-            ScreenRecorder.Data = await ScreenRecorder.Address.PostJsonAsync(req).ReceiveString();
+            ScreenRecorder.Data = await ScreenRecorder.Address.PostJsonAsync(ScreenRecorder).ReceiveString();
 
 
             return View("Index", ScreenRecorder);

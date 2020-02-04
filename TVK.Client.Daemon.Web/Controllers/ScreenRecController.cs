@@ -45,13 +45,13 @@ namespace TVK.Client.Daemon.Web.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post(string command)
+        public async Task<IActionResult> Post(ScreenRecorder ScreenRecorder)
         {
 
             
             using (HttpClient client = new HttpClient())
             {
-                var a = client.GetAsync("http://localhost:54278/home/start").Result;
+                var a = client.GetAsync("http://localhost:54278/home/" + ScreenRecorder.Command).Result;
                 Console.Write(a);
             }
                 

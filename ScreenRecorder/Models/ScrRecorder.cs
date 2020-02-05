@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.IO.Compression;
+using System.Net.Sockets;
 
 namespace ScreenRecorder.Models
 {
@@ -147,14 +148,38 @@ namespace ScreenRecorder.Models
                 }
                 //Save screenshot:
                 //string name = tempPath + "//" + DateTime.Now.ToShortDateString() + DateTime.Now.ToLongTimeString() + ".png";
-                string name = tempPath + "//screenshot-" + fileCount + ".png";
-                bitmap.Save(name, ImageFormat.Png);
+                string name = tempPath + "//screenshot-" + fileCount + ".jpeg";
+                bitmap.Save(name, ImageFormat.Jpeg);
                 inputImageSequence.Add(name);
                 fileCount++;
 
-
                 //Dispose of bitmap:
                 bitmap.Dispose();
+
+                //отправка изображения
+                TcpClient client = new TcpClient("127.0.0.1", 20000);
+                using (FileStream inputStream = File.OpenRead(name))
+                {
+                    using (NetworkStream outputStream = client.GetStream())
+                    {
+                        using (BinaryWriter writer = new BinaryWriter(outputStream))
+                        {
+                            long lenght = inputStream.Length;
+                            long totalBytes = 0;
+                            int readBytes = 0;
+                            byte[] buffer = new byte[2048];
+                            writer.Write(Path.GetFileName(name));
+                            writer.Write(lenght);
+                            do
+                            {
+                                readBytes = inputStream.Read(buffer, 0, buffer.Length);
+                                outputStream.Write(buffer, 0, readBytes);
+                                totalBytes += readBytes;
+                            } while (client.Connected && totalBytes < lenght);
+                        }
+                    }
+                }
+                client.Close();
             }
         }
 

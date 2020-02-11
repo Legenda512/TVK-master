@@ -1,21 +1,30 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Запись экрана";
-    var address = Model?.Address ?? "http://192.168.0.30:5000/api/screenrec";
+    var address = Model?.Address ?? "http://192.168.99.1:5000/api/screenrec";
     var command = Model?.Command ?? "start";
 
 }
 
+    <div class="text-center">
+        <form method="post" action="screenrecorder">
+            <p>
+                <label for="address">Address:</label> <input type="text" name="address" id="address" value="@address" />
+            </p>
+            <p>
+                <label for="command">Command:</label> <input type="text" name="command" id="command" value="@command" />
+            </p>
+            <p>
+                <input type="button" value="Run" id="click" />
+            </p>
+        </form>
 
-<div class="text-center">
-    <form method="post" action="screenrecorder">
-        <p>
-            <label for="address">Address:</label> <input type="text" name="address" id="address" value="@address" />
-        </p>
-        <p>
-            <label for="command">Command:</label> <input type="text" name="command" id="command" value="@command" />
-        </p>
-        <p>
-            <input type="submit" value="Run" />
-        </p>
-    </form>
-</div>
+        
+    </div>
+
+    <img src='recived/screenshot-1.jpeg' id="image" style="max-width: 100%;" />
+
+
+
+
+

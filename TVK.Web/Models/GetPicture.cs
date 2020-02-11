@@ -5,14 +5,17 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TVK.Web.Models
 {
     public class GetPicture
     {
+        public static string folder = Environment.CurrentDirectory + "\\wwwroot\\recived";
+
         public static void Get_Picture()
         {
-			string folder = "recived";
+			
 			TcpListener listener = new TcpListener(IPAddress.Any, 20000);
 			listener.Start();
 			while (true)
@@ -44,6 +47,21 @@ namespace TVK.Web.Models
 				client.Close();
 				
 			}
-			}
+		}
+
+        public static void Delet_Picture()
+        {
+            string[] files = Directory.GetFiles(folder);
+
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+        }
+
+
+
     }
 }

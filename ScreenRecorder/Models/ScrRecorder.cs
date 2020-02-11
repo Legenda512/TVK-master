@@ -81,10 +81,6 @@ namespace ScreenRecorder.Models
 
 
             string sourceFolder = outputPath + "tempScreenCaps/" ; // исходная папка
-            string zipFile = outputPath + "Video\\" + DateTime.Now.ToShortDateString() + ".zip"; // сжатый файл
-            
-            ZipFile.CreateFromDirectory(sourceFolder, zipFile);
-
 
             //Delete each file:
             foreach (string file in files)

@@ -14,7 +14,8 @@ namespace TVK.Web.Controllers
     public class ScreenRecorderController : Controller
     {
         static bool thread = false;
-        Thread mythread = new Thread(GetPicture.Get_Picture);
+        Thread mythreadGetFile = new Thread(GetPicture.Get_Picture);
+        Thread mythreadDeleteFile = new Thread(GetPicture.Delet_Picture);
         public IActionResult Index()
         {
             return View();
@@ -33,19 +34,22 @@ namespace TVK.Web.Controllers
             if (ScreenRecorder.Command == "start" && thread == false)
             {
                 thread = true;
-                mythread.IsBackground = true;
-                mythread.Start();
+                mythreadGetFile.IsBackground = true;
+                mythreadGetFile.Start();
             }
 
 
             ScreenRecorder.Data = await ScreenRecorder.Address.PostJsonAsync(ScreenRecorder).ReceiveString();
 
-            
 
-            //if (ScreenRecorder.Command == "stop" && thread == true)
-            //{
-            //    mythread.
-            //}
+
+            if (ScreenRecorder.Command == "stop" && thread == true)
+            {
+                thread = false;
+                mythreadDeleteFile.IsBackground = true;
+                mythreadDeleteFile.Start();
+
+            }
 
 
 

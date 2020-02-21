@@ -1,6 +1,6 @@
 ﻿	var total_pics_num = 100000; // колличество изображений
-    var interval = 100;    // задержка между изображениями
-    var time_out = 100;       // задержка смены изображений
+    var interval = 1500;    // задержка между изображениями
+    var time_out = 1500;       // задержка смены изображений
     var i = 0;
     var timeout;
     var flag = false;

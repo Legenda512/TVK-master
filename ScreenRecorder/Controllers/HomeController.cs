@@ -33,23 +33,9 @@ namespace ScreenRecorder.Controllers
                                                             System.Windows.Forms.Screen.PrimaryScreen.Bounds.Size.Height), "C:\\");
         }
 
-        
-        
+
         public string Index()
         {
-
-            //var cancelSource = new CancellationTokenSource();
-            //new Thread(() =>
-            //{
-            //    try
-            //    {
-            //        Work(cancelSource.Token);
-            //    }
-            //    catch (OperationCanceledException)
-            //    {
-            //        Console.WriteLine("Canceled!");
-            //    }
-            //}).Start();
 
             return "";
         }
@@ -106,6 +92,20 @@ namespace ScreenRecorder.Controllers
                 screenRec.RecordVideo();
                 screenRec.RecordAudio();
             }
+        }
+
+
+        [HttpGet]
+        [Route("systeminfo")]
+        public string systeminfo()
+        {
+
+            MonitorSystem monitorSystem = new MonitorSystem();
+
+            string Get_Monitor_System = monitorSystem.Processor();
+
+
+            return Get_Monitor_System;
         }
 
     }

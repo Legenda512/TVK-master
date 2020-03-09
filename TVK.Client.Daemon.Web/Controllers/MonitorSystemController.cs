@@ -16,19 +16,9 @@ namespace TVK.Client.Daemon.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(GetMonitorSystem GetMonitorSystem)
         {
+            GetMonitorSystem.Processor(GetMonitorSystem);
 
-
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    var a = client.GetAsync("http://localhost:54278/home/" + GetMonitorSystem.Command).Result.Content;
-            //    Console.Write(a);
-            //}
-
-            //return Ok();
-
-            var result =  GetMonitorSystem.Processor();
-            // HttpContext.Response.Body.Write(Encoding.UTF8.GetBytes("result"));
-            return Ok(result); //попробовать вывести в консоль или файл
+            return Ok(GetMonitorSystem); //попробовать вывести в консоль или файл
 
         }
 

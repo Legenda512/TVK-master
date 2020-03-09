@@ -249,7 +249,7 @@ namespace ScreenRecorder.Models
             //Video variables:
             int width = bounds.Width;
             int height = bounds.Height;
-            int frameRate = 10;
+            //int frameRate = 10;
 
             //Save audio:
             SaveAudio();

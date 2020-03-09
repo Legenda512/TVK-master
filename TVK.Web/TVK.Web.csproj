@@ -27,12 +27,12 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\TVK.Client.Daemon.Web\TVK.Client.Daemon.Web.csproj" />
+    <Folder Include="Views\Document\" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <Folder Include="Views\Document\" />
+    <ProjectReference Include="..\TVK.Client.Daemon.Web\TVK.Client.Daemon.Web.csproj" />
   </ItemGroup>
 
 </Project>

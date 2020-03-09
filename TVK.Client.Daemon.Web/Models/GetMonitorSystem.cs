@@ -12,30 +12,30 @@ namespace TVK.Client.Daemon.Web.Models
         public string Command { get; set; }
         public string Data { get; set; }
 
-		public string LoadPercentage;
-		public string NumberOfCores;
-		public string NumberOfLogicalProcessors;
-		public string TotalVisibleMemorySize;
-		public string FreePhysicalMemory;
+		public string LoadPercentage { get; set; }
+		public string NumberOfCores { get; set; }
+		public string NumberOfLogicalProcessors { get; set; }
+		public string TotalVisibleMemorySize { get; set; }
+		public string FreePhysicalMemory { get; set; }
 
 
-		public string Processor()
+		public GetMonitorSystem Processor(GetMonitorSystem monitorSystem)
 		{
+			
+			var driveQuery = new ManagementObjectSearcher("select * from Win32_Processor");
+			foreach (ManagementObject d in driveQuery.Get())
 			{
-				GetMonitorSystem monitorSystem = new GetMonitorSystem();
-				var driveQuery = new ManagementObjectSearcher("select * from Win32_Processor");
-				foreach (ManagementObject d in driveQuery.Get())
-				{
-					monitorSystem.LoadPercentage = d.Properties["LoadPercentage"].Value.ToString();
+				monitorSystem.LoadPercentage = d.Properties["LoadPercentage"].Value.ToString();
 
-					monitorSystem.NumberOfCores = d.Properties["NumberOfCores"].Value.ToString();
+				monitorSystem.NumberOfCores = d.Properties["NumberOfCores"].Value.ToString();
 
-					monitorSystem.NumberOfLogicalProcessors = d.Properties["NumberOfLogicalProcessors"].Value.ToString();
-
-				}
-				return ("LoadPercentage: " + monitorSystem.LoadPercentage + ";" + "NumberOfCores: " + monitorSystem.NumberOfCores + ";" + "NumberOfLogicalProcessors: " + monitorSystem.NumberOfLogicalProcessors);
+				monitorSystem.NumberOfLogicalProcessors = d.Properties["NumberOfLogicalProcessors"].Value.ToString();
 
 			}
+			monitorSystem.Data = "LoadPercentage: " + monitorSystem.LoadPercentage + ";" + "NumberOfCores: " + monitorSystem.NumberOfCores + ";" + "NumberOfLogicalProcessors: " + monitorSystem.NumberOfLogicalProcessors;
+
+			return monitorSystem;
+
 		}
 
 	}

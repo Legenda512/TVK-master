@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TVK.Web.Models;
 using Flurl.Http;
-using TVK.Client.Daemon.Web.Models;
 using System.Threading;
+using TVK.Client.Daemon.Web.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace TVK.Web.Controllers
 {
@@ -30,18 +31,27 @@ namespace TVK.Web.Controllers
             }
 
 
+
             GetMonitorSystem.Data = await GetMonitorSystem.Address.PostJsonAsync(GetMonitorSystem).ReceiveString();
 
+            string[] info = GetMonitorSystem.Data.Split(new char[] { ' ', '\n', '\r', ';', ':' , ',', '\"' }, StringSplitOptions.RemoveEmptyEntries) ;
+
+            string subString = "LoadPercentage";
+
+            int indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.LoadPercentage = info[indexOfSubstring + 1];
+
+            subString = "NumberOfCores";
+            indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.NumberOfCores = info[indexOfSubstring + 1];
+
+            subString = "NumberOfLogicalProcessors";
+            indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.NumberOfLogicalProcessors = info[indexOfSubstring + 1];
 
             return View("Index", GetMonitorSystem);
 
 
-
-            //var req = new
-            //{
-            //    command = GetMonitorSystem.Command
-            //};
-            //GetMonitorSystem.Data = await GetMonitorSystem.Address.PostJsonAsync(req).ReceiveString();
 
         }
 

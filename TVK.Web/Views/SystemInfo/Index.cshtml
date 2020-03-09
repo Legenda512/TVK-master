@@ -1,7 +1,7 @@
 ﻿@model TVK.Client.Daemon.Web.Models.GetMonitorSystem
 @{
     ViewData["Title"] = "Мониторинг системы";
-    var address = Model?.Address ?? "http://192.168.99.1:5000/api/monitorsystem";
+    var address = Model?.Address ?? "http://192.168.0.30:5000/api/monitorsystem";
     var command = Model?.Command ?? "systeminfo";
 
 }
@@ -15,15 +15,27 @@
                 <label for="command">Command:</label> <input type="text" name="command" id="command" value="@command" />
             </p>
             <p>
-                <input type="button" value="Run" id="click" />
+                <input type="submit" value="Run" />
             </p>
+
+            <br />
+            <br />
+
+            @if (!string.IsNullOrEmpty(Model?.Data))
+            {
+
+                <table class="mytable">
+                    <tbody>
+                        <tr><td>Загрузка процессора</td><td>@Model.LoadPercentage</td></tr>
+                        <tr><td>Число ядер в процессоре</td><td>@Model.NumberOfCores</td></tr>
+                        <tr><td>Число поток в процессоре</td><td>@Model.NumberOfLogicalProcessors</td></tr>
+                    </tbody>
+                </table>
+
+            }
+
+
         </form>
-
-        @if (!string.IsNullOrEmpty(Model?.Data))
-        {
-            Model.Data.ToString();
-        }
-
 
     </div>
 

@@ -49,6 +49,16 @@ namespace TVK.Web.Controllers
             indexOfSubstring = info.IndexOf(subString);
             GetMonitorSystem.NumberOfLogicalProcessors = info[indexOfSubstring + 1];
 
+            subString = "TotalVisibleMemorySize";
+            indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.TotalVisibleMemorySize = info[indexOfSubstring + 1];
+
+            subString = "FreePhysicalMemory";
+            indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.FreePhysicalMemory = info[indexOfSubstring + 1];
+
+
+
             return View("Index", GetMonitorSystem);
 
 

@@ -32,7 +32,19 @@ namespace TVK.Client.Daemon.Web.Models
 				monitorSystem.NumberOfLogicalProcessors = d.Properties["NumberOfLogicalProcessors"].Value.ToString();
 
 			}
-			monitorSystem.Data = "LoadPercentage: " + monitorSystem.LoadPercentage + ";" + "NumberOfCores: " + monitorSystem.NumberOfCores + ";" + "NumberOfLogicalProcessors: " + monitorSystem.NumberOfLogicalProcessors;
+
+			driveQuery = new ManagementObjectSearcher("Select * From Win32_OPeratingSystem");
+
+			foreach(ManagementObject d in driveQuery.Get())
+			{
+				monitorSystem.TotalVisibleMemorySize = d.Properties["TotalVisibleMemorySize"].Value.ToString();
+
+				monitorSystem.FreePhysicalMemory = d.Properties["FreePhysicalMemory"].Value.ToString();
+
+			}
+
+			monitorSystem.Data = "LoadPercentage: " + monitorSystem.LoadPercentage + ";" + "NumberOfCores: " + monitorSystem.NumberOfCores + ";" + "NumberOfLogicalProcessors: " + monitorSystem.NumberOfLogicalProcessors + ";"
+				+ "TotalVisibleMemorySize: " + monitorSystem.TotalVisibleMemorySize + ";" + "FreePhysicalMemory: " + monitorSystem.FreePhysicalMemory;
 
 			return monitorSystem;
 

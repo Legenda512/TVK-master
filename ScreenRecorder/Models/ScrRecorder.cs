@@ -76,43 +76,43 @@ namespace ScreenRecorder.Models
         //Delete all files and directory:
         private void DeletePath(string targetDir)
         {
-            string[] files = Directory.GetFiles(targetDir);
-            string[] dirs = Directory.GetDirectories(targetDir);
+            //string[] files = Directory.GetFiles(targetDir);
+            //string[] dirs = Directory.GetDirectories(targetDir);
 
 
-            string sourceFolder = outputPath + "tempScreenCaps/" ; // исходная папка
+           // string sourceFolder = outputPath + "tempScreenCaps/" ; // исходная папка
 
             //Delete each file:
-            foreach (string file in files)
-            {
-                File.SetAttributes(file, FileAttributes.Normal);
-                File.Delete(file);
-            }
+            //foreach (string file in files)
+            //{
+            //    File.SetAttributes(file, FileAttributes.Normal);
+            //    File.Delete(file);
+            //}
 
             //Delete the path:
-            foreach (string dir in dirs)
-            {
-                DeletePath(dir);
-            }
+            //foreach (string dir in dirs)
+            //{
+            //    DeletePath(dir);
+            //}
 
             Directory.Delete(targetDir, false);
         }
 
         //Delete all files except the one specified:
-        private void DeleteFilesExcept(string targetDir, string excDir)
-        {
-            string[] files = Directory.GetFiles(targetDir);
+        //private void DeleteFilesExcept(string targetDir, string excDir)
+        //{
+        //    string[] files = Directory.GetFiles(targetDir);
 
-            //Delete each file except specified:
-            foreach (string file in files)
-            {
-                if (file != excDir && file != "C:\\hiberfil.sys" && file != "C:\\pagefile.sys" && file != "C:\\swapfile.sys")
-                {
-                    File.SetAttributes(file, FileAttributes.Normal);
-                    File.Delete(file);
-                }
-            }
-        }
+        //    //Delete each file except specified:
+        //    foreach (string file in files)
+        //    {
+        //        if (file != excDir && file != "C:\\hiberfil.sys" && file != "C:\\pagefile.sys" && file != "C:\\swapfile.sys")
+        //        {
+        //            File.SetAttributes(file, FileAttributes.Normal);
+        //            File.Delete(file);
+        //        }
+        //    }
+        //}
 
         //Clean up program on crash:
         public void cleanUp()
@@ -127,6 +127,19 @@ namespace ScreenRecorder.Models
         public string getElapsed()
         {
             return string.Format("{0:D2}:{1:D2}:{2:D2}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds);
+        }
+
+        private ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
         }
 
         //Record video:
@@ -145,7 +158,19 @@ namespace ScreenRecorder.Models
                 //Save screenshot:
                 //string name = tempPath + "//" + DateTime.Now.ToShortDateString() + DateTime.Now.ToLongTimeString() + ".png";
                 string name = tempPath + "//screenshot-" + fileCount + ".jpeg";
-                bitmap.Save(name, ImageFormat.Jpeg);
+
+                ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+
+                // Create an Encoder object based on the GUID  
+                // for the Quality parameter category.  
+                System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
+ 
+                EncoderParameters myEncoderParameters = new EncoderParameters(1);
+
+                EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 50L);
+                myEncoderParameters.Param[0] = myEncoderParameter;
+                bitmap.Save(name, jpgEncoder, myEncoderParameters);
+
                 inputImageSequence.Add(name);
                 fileCount++;
 
@@ -176,6 +201,7 @@ namespace ScreenRecorder.Models
                     }
                 }
                 client.Close();
+                File.Delete(name);
             }
         }
 

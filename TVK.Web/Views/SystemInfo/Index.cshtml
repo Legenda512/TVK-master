@@ -6,39 +6,79 @@
 
 }
 
+@*<div class="text-center">
+        <form method="post" action="systeminfo">
+            <p>
+                <label for="address">Address:</label> <input type="text" name="address" id="address" value="@address" />
+            </p>
+            <p>
+                <label for="command">Command:</label> <input type="text" name="command" id="command" value="@command" />
+            </p>
+            <p>
+                <input type="submit" value="Run" />
+            </p>
+
+            <br />
+            <br />
+
+            @if (!string.IsNullOrEmpty(Model?.Data))
+            {
+
+                <table class="mytable">
+                    <tbody>
+                        <tr><td>Загрузка процессора</td><td>@Model.LoadPercentage</td></tr>
+                        <tr><td>Число ядер в процессоре</td><td>@Model.NumberOfCores</td></tr>
+                        <tr><td>Число поток в процессоре</td><td>@Model.NumberOfLogicalProcessors</td></tr>
+                        <tr><td>Количество оперативной памяти (byte)</td><td>@Model.TotalVisibleMemorySize</td></tr>
+                        <tr><td>Количество свободной оперативной памяти (byte)</td><td>@Model.FreePhysicalMemory</td></tr>
+                    </tbody>
+                </table>
+
+            }
+
+
+        </form>
+
+    </div>*@
+
 <div class="text-center">
-    <form method="post" action="systeminfo">
-        <p>
-            <label for="address">Address:</label> <input type="text" name="address" id="address" value="@address" />
-        </p>
-        <p>
-            <label for="command">Command:</label> <input type="text" name="command" id="command" value="@command" />
-        </p>
-        <p>
-            <input type="submit" value="Run" />
-        </p>
+    <fieldset>
+        <legend>Json systeminfo</legend>
+        <form>
+            Address <input type="text" value="http://192.168.0.30:5000/api/monitorsystem" id="address" />
+            <input type="button" value="Выполнить" id="button_Get_systeminfo" />
+            <br />
+            <span id="result"> </span>
+        </form>
+    </fieldset>
 
-        <br />
-        <br />
-
-        @if (!string.IsNullOrEmpty(Model?.Data))
-        {
-
-            <table class="mytable">
-                <tbody>
-                    <tr><td>Загрузка процессора</td><td>@Model.LoadPercentage</td></tr>
-                    <tr><td>Число ядер в процессоре</td><td>@Model.NumberOfCores</td></tr>
-                    <tr><td>Число поток в процессоре</td><td>@Model.NumberOfLogicalProcessors</td></tr>
-                    <tr><td>Количество оперативной памяти (byte)</td><td>@Model.TotalVisibleMemorySize</td></tr>
-                    <tr><td>Количество свободной оперативной памяти (byte)</td><td>@Model.FreePhysicalMemory</td></tr>
-                </tbody>
-            </table>
-
-        }
-
-
-    </form>
 
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+        $(document).ready(function(){
+		$('#button_Get_systeminfo').click( function(){
+			var address = $('#address').val();
+			$.ajax({
+				type: 'GET',
+				url: '/systeminfo/get_systeminfo/' + address,
+                success: function (result) {
+                    var s = '';
+                    s += '<br>Загрузка процессора: ' + result.loadPercentage;
+                    s += '<br>Количество ядер: ' + result.numberOfCores;
+                    s += '<br>Количество потоков: ' + result.numberOfLogicalProcessors;
+                    s += '<br>Количество оперативной памяти: ' + result.totalVisibleMemorySize;
+                    s += '<br>Количество свободной оперативной памяти: ' + result.freePhysicalMemory;
+                    s += '<br>------------------';
+					$('#result').html(s);
+				}
+			});
+		});
+		
+        })
+    console.log("hello json");
+</script>
 
 

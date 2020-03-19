@@ -19,6 +19,40 @@ namespace TVK.Web.Controllers
             return View();
         }
 
+        [Route("get_systeminfo/{address}")]
+        public async Task<IActionResult> Get_systeminfo(string address)
+        {
+            GetMonitorSystem GetMonitorSystem = new GetMonitorSystem();
+
+            GetMonitorSystem.Address = "http://" + address + "/api/monitorsystem";
+
+            GetMonitorSystem.Data = await GetMonitorSystem.Address.PostJsonAsync(GetMonitorSystem).ReceiveString();
+
+            string[] info = GetMonitorSystem.Data.Split(new char[] { ' ', '\n', '\r', ';', ':', ',', '\"' }, StringSplitOptions.RemoveEmptyEntries);
+
+            string subString = "LoadPercentage";
+
+            int indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.LoadPercentage = info[indexOfSubstring + 1];
+
+            subString = "NumberOfCores";
+            indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.NumberOfCores = info[indexOfSubstring + 1];
+
+            subString = "NumberOfLogicalProcessors";
+            indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.NumberOfLogicalProcessors = info[indexOfSubstring + 1];
+
+            subString = "TotalVisibleMemorySize";
+            indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.TotalVisibleMemorySize = info[indexOfSubstring + 1];
+
+            subString = "FreePhysicalMemory";
+            indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.FreePhysicalMemory = info[indexOfSubstring + 1];
+
+            return new JsonResult(GetMonitorSystem);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post(GetMonitorSystem GetMonitorSystem)

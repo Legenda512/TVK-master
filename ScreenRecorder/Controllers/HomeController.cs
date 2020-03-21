@@ -38,6 +38,7 @@ namespace ScreenRecorder.Controllers
         {
             return "";
         }
+
         [HttpGet]
         [Route("start")]
         public string start()
@@ -89,7 +90,7 @@ namespace ScreenRecorder.Controllers
                     return;
                 }
                 screenRec.RecordVideo();
-                screenRec.RecordAudio();
+                //screenRec.RecordAudio();
             }
         }
 

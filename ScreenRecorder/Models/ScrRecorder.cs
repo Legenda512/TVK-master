@@ -24,19 +24,19 @@ namespace ScreenRecorder.Models
         private List<string> inputImageSequence = new List<string>();
 
         //File variables:
-        private string audioName = "mic.wav";
-        private string videoName = "video.mp4";
-        private string finalName = "FinalVideo.mp4";
+        //private string audioName = "mic.wav";
+        //private string videoName = "video.mp4";
+        //private string finalName = "FinalVideo.mp4";
 
         //Time variable:
-        Stopwatch watch = new Stopwatch();
+        //Stopwatch watch = new Stopwatch();
 
         //Audio variables:
-        public static class NativeMethods
-        {
-            [DllImport("winmm.dll", EntryPoint = "mciSendStringA", ExactSpelling = true, CharSet = CharSet.Ansi, SetLastError = true)]
-            public static extern int record(string lpstrCommand, string lpstrReturnString, int uReturnLength, int hwndCallback);
-        }
+        //public static class NativeMethods
+        //{
+        //    [DllImport("winmm.dll", EntryPoint = "mciSendStringA", ExactSpelling = true, CharSet = CharSet.Ansi, SetLastError = true)]
+        //    public static extern int record(string lpstrCommand, string lpstrReturnString, int uReturnLength, int hwndCallback);
+        //}
 
         //ScreenRecorder Object:
         public ScrRecorder(Rectangle b, string outPath)
@@ -68,26 +68,26 @@ namespace ScreenRecorder.Models
         }
 
         //Change final video name:
-        public void setVideoName(string name)
-        {
-            finalName = name;
-        }
+        //public void setVideoName(string name)
+        //{
+        //    finalName = name;
+        //}
 
         //Delete all files and directory:
         private void DeletePath(string targetDir)
         {
-            //string[] files = Directory.GetFiles(targetDir);
+            string[] files = Directory.GetFiles(targetDir);
             //string[] dirs = Directory.GetDirectories(targetDir);
 
 
-           // string sourceFolder = outputPath + "tempScreenCaps/" ; // исходная папка
+            // string sourceFolder = outputPath + "tempScreenCaps/" ; // исходная папка
 
             //Delete each file:
-            //foreach (string file in files)
-            //{
-            //    File.SetAttributes(file, FileAttributes.Normal);
-            //    File.Delete(file);
-            //}
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
 
             //Delete the path:
             //foreach (string dir in dirs)
@@ -124,10 +124,10 @@ namespace ScreenRecorder.Models
         }
 
         //Return elapsed time:
-        public string getElapsed()
-        {
-            return string.Format("{0:D2}:{1:D2}:{2:D2}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds);
-        }
+        //public string getElapsed()
+        //{
+        //    return string.Format("{0:D2}:{1:D2}:{2:D2}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds);
+        //}
 
         private ImageCodecInfo GetEncoder(ImageFormat format)
         {
@@ -146,7 +146,7 @@ namespace ScreenRecorder.Models
         public void RecordVideo()
         {
             //Keep track of time:
-            watch.Start();
+            //watch.Start();
 
             using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
             {
@@ -206,19 +206,19 @@ namespace ScreenRecorder.Models
         }
 
         //Record audio:
-        public void RecordAudio()
-        {
-            NativeMethods.record("open new Type waveaudio Alias recsound", "", 0, 0);
-            NativeMethods.record("record recsound", "", 0, 0);
-        }
+        //public void RecordAudio()
+        //{
+        //    NativeMethods.record("open new Type waveaudio Alias recsound", "", 0, 0);
+        //    NativeMethods.record("record recsound", "", 0, 0);
+        //}
 
         //Save audio file:
-        private void SaveAudio()
-        {
-            string audioPath = "save recsound " + outputPath + "Video\\" + audioName;
-            NativeMethods.record(audioPath, "", 0, 0);
-            NativeMethods.record("close recsound", "", 0, 0);
-        }
+        //private void SaveAudio()
+        //{
+        //    string audioPath = "save recsound " + outputPath + "Video\\" + audioName;
+        //    NativeMethods.record(audioPath, "", 0, 0);
+        //    NativeMethods.record("close recsound", "", 0, 0);
+        //}
 
         //Save video file:
         //private void SaveVideo(int width, int height, int frameRate)
@@ -270,15 +270,15 @@ namespace ScreenRecorder.Models
         public void Stop()
         {
             //Stop watch:
-            watch.Stop();
+            //watch.Stop();
 
             //Video variables:
-            int width = bounds.Width;
-            int height = bounds.Height;
+            //int width = bounds.Width;
+            //int height = bounds.Height;
             //int frameRate = 10;
 
             //Save audio:
-            SaveAudio();
+            //SaveAudio();
 
             //Save video:
             //SaveVideo(width, height, frameRate);

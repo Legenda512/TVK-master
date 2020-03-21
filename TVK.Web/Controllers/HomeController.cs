@@ -30,17 +30,11 @@ namespace TVK.Web.Controllers
             return View();
         }
 
-        [Authorize(Roles = "1")]
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Post(TvkCommand tvkCommand)
         {
+            string ip_PC = tvkCommand.Address;
+            tvkCommand.Address = "http://" + ip_PC + "/api/command";
 
             DateTime start = new DateTime();
             start = DateTime.Now;
@@ -76,12 +70,12 @@ namespace TVK.Web.Controllers
             await db.SaveChangesAsync();
 
             Pc pc = db.Pc
-                .Where(t => t.IpAddress == tvkCommand.Address)
+                .Where(t => t.IpAddress == ip_PC)
                 .FirstOrDefault();
 
             if (pc == null)
             {
-                pc = new Pc { IpAddress = tvkCommand.Address, NamePc = "1", IdOsPc = 1 };
+                pc = new Pc { IpAddress = ip_PC, NamePc = "1", IdOsPc = 1 };
                 db.Pc.Add(pc);
                 await db.SaveChangesAsync();
             }
@@ -179,11 +173,6 @@ namespace TVK.Web.Controllers
             }
 
 
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [Authorize(Roles = "1,2")]
         public IActionResult Profile()

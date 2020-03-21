@@ -16,7 +16,6 @@
     <PackageReference Include="GemBox.Document" Version="29.0.0.1158" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.Chart.Controls" Version="4.7.2046" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

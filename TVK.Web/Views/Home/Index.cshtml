@@ -5,7 +5,7 @@
 
 @{
     ViewData["Title"] = "Главная";
-    var address = Model?.Address ?? "http://192.168.56.1:5000/api/command";
+    var address = Model?.Ip_Address ?? "192.168.0.30:5000";
     var command = Model?.Command ?? "hostname";
 
     testSQLContext db = new testSQLContext();
@@ -16,6 +16,7 @@
 
 
     var backgroundCommand = db.BackgroundCommand.ToList();
+    var PC_address = db.Pc.ToList();
     List<string> data = new List<string>();
 
     DateTime start = new DateTime();
@@ -40,7 +41,21 @@
             <p>
                 <input type="submit" value="Run" />
             </p>
-
+            <br />
+            <br />
+            <table class="mytable">
+                <thead>
+                    <tr><th>IP адреса компьютеров</th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var pc in PC_address)
+                    {
+                        <tr><td>@pc.IpAddress </td><td>@pc.NamePc</td></tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+            <br />
             <table class="mytable">
                 <thead>
                     <tr><th>Команды</th></tr>

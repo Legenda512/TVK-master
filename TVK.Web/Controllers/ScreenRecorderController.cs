@@ -24,8 +24,9 @@ namespace TVK.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(ScreenRecorder ScreenRecorder)
         {
+            string ip_PC = ScreenRecorder.Address;
+            ScreenRecorder.Address = "http://" + ip_PC + "/api/screenrec";
 
-            
             if (ScreenRecorder == null)
             {
                 throw new ArgumentNullException(nameof(ScreenRecorder));

@@ -36,7 +36,6 @@ namespace ScreenRecorder.Controllers
 
         public string Index()
         {
-
             return "";
         }
         [HttpGet]
@@ -92,20 +91,6 @@ namespace ScreenRecorder.Controllers
                 screenRec.RecordVideo();
                 screenRec.RecordAudio();
             }
-        }
-
-
-        [HttpGet]
-        [Route("systeminfo")]
-        public string systeminfo()
-        {
-
-            MonitorSystem monitorSystem = new MonitorSystem();
-
-            string Get_Monitor_System = monitorSystem.Processor();
-
-
-            return Get_Monitor_System;
         }
 
     }

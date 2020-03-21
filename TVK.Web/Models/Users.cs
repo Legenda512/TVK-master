@@ -9,6 +9,7 @@ namespace TVK.Web
         {
             Command = new HashSet<Command>();
             ContactInformation = new HashSet<ContactInformation>();
+            MonitorSystem = new HashSet<MonitorSystem>();
             PersonalInformation = new HashSet<PersonalInformation>();
             Roles = new HashSet<Roles>();
         }
@@ -20,6 +21,7 @@ namespace TVK.Web
 
         public virtual ICollection<Command> Command { get; set; }
         public virtual ICollection<ContactInformation> ContactInformation { get; set; }
+        public virtual ICollection<MonitorSystem> MonitorSystem { get; set; }
         public virtual ICollection<PersonalInformation> PersonalInformation { get; set; }
         public virtual ICollection<Roles> Roles { get; set; }
     }

@@ -10,10 +10,12 @@ using Flurl.Http;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore.Internal;
+using TVK.Client.Daemon.Web.Models;
 
 
 namespace TVK.Web.Controllers
 {
+
     public class HomeController : Controller
     {
         private testSQLContext db;
@@ -21,19 +23,10 @@ namespace TVK.Web.Controllers
         {
             db = context;
         }
+
         [Authorize(Roles = "1,2")]
         public IActionResult Index()
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
-            //    if (role.Equals("1"))
-            //        role = "Администратор";
-            //    else role = "Гость";
-            //    return Content($"ваша роль: {role}");
-            //}
-            //return Content("не аутентифицирован");
-
             return View();
         }
 
@@ -108,8 +101,7 @@ namespace TVK.Web.Controllers
                 string subString = "узла:";
                 int indexOfSubstring = info.IndexOf(subString);
                 systeminfo.Nodename = info[indexOfSubstring + 1];
-                //if (info[i] == "узла:")
-                //    systeminfo.Nodename = info[i + 1];
+
 
                 subString = "Название";
                 string subString1 = "ОС:";
@@ -117,36 +109,31 @@ namespace TVK.Web.Controllers
                 int indexOfSubstring1 = info.IndexOf(subString1);
                 if (indexOfSubstring1 - indexOfSubstring == 1)
                     systeminfo.NameOfOs = info[indexOfSubstring + 2] + " " + info[indexOfSubstring + 3] + " " + info[indexOfSubstring + 4] + " " + info[indexOfSubstring + 5];
-                //if (info[i] == "Название" && info[i+1] == "ОС:")
-                //    systeminfo.NameOfOs = info[i + 2] + " "+ info[i + 3] + " " + info[i + 4] + " " + info[i + 5];
+
 
                 subString = "Изготовитель";
                 indexOfSubstring = info.IndexOf(subString);
                 if (info[indexOfSubstring + 1] == "ОС:")
                     systeminfo.SystemManufacturer = info[indexOfSubstring + 2] + " " + info[indexOfSubstring + 3];
-                //if (info[i] == "Изготовитель" && info[i + 1] == "ОС:")
-                //    systeminfo.SystemManufacturer = info[i + 2] + " " + info[i + 3];
+
 
                 subString = "Модель";
                 indexOfSubstring = info.IndexOf(subString);
                 if (info[indexOfSubstring + 1] == "системы:")
                     systeminfo.ModelSystem = info[indexOfSubstring + 2];
-                //if (info[i] == "Изготовитель" && info[i + 1] == "системы:")
-                //    systeminfo.ModelSystem = info[i + 2];
+
 
                 subString = "Тип";
                 indexOfSubstring = info.IndexOf(subString);
                 if (info[indexOfSubstring + 1] == "системы:")
                     systeminfo.TypeOfSystem = info[indexOfSubstring + 2] + " " + info[indexOfSubstring + 3];
-                //if (info[i] == "Тип" && info[i + 1] == "системы:")
-                //    systeminfo.TypeOfSystem = info[i + 2] + " " + info[i + 3];
+
 
                 subString = "Полный";
                 indexOfSubstring = info.IndexOf(subString);
                 if (info[indexOfSubstring + 1] == "объем" && info[indexOfSubstring + 2] == "физической" && info[indexOfSubstring + 3] == "памяти:")
                     systeminfo.PhysicalMemory = info[indexOfSubstring + 4] + " " + info[indexOfSubstring + 5];
-                //if (info[i] == "Полный" && info[i + 1] == "объем" && info[i + 2] == "физической" && info[i + 3] == "памяти:")
-                //    systeminfo.PhysicalMemory = info[i + 4] + " " + info[i + 5];
+
 
                 subString = "Сетевые";
                 indexOfSubstring = info.IndexOf(subString);
@@ -158,11 +145,7 @@ namespace TVK.Web.Controllers
                     for (int i = indexOfSubstring + 2; i != indexOfSubstring2 - 1; i++ )
                         systeminfo.NetworkAdapters += info[i] + " ";
                 }
-                //if (info[i] == "Сетевые" && info[i + 1] == "адаптеры:")
-                //{
-                //    while(info[i] != "Требования")
-                //        systeminfo.NetworkAdapters = info[i] + " ";
-                //}      
+  
 
                 db.Systeminfo.Add(systeminfo);
                 await db.SaveChangesAsync();
@@ -207,6 +190,69 @@ namespace TVK.Web.Controllers
         {
             return View();
         }
+
+        [Route("get_systeminfo/{address}")]
+        public async Task<IActionResult> Get_systeminfo(string address)
+        {
+            GetMonitorSystem GetMonitorSystem = new GetMonitorSystem();
+
+            GetMonitorSystem.Address = "http://" + address + "/api/monitorsystem";
+
+            GetMonitorSystem.Data = await GetMonitorSystem.Address.PostJsonAsync(GetMonitorSystem).ReceiveString();
+
+            string[] info = GetMonitorSystem.Data.Split(new char[] { ' ', '\n', '\r', ';', ':', ',', '\"' }, StringSplitOptions.RemoveEmptyEntries);
+
+            string subString = "LoadPercentage";
+
+            int indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.LoadPercentage = info[indexOfSubstring + 1];
+
+            subString = "NumberOfCores";
+            indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.NumberOfCores = info[indexOfSubstring + 1];
+
+            subString = "NumberOfLogicalProcessors";
+            indexOfSubstring = info.IndexOf(subString);
+            GetMonitorSystem.NumberOfLogicalProcessors = info[indexOfSubstring + 1];
+
+            subString = "TotalVisibleMemorySize";
+            indexOfSubstring = info.IndexOf(subString);
+            int TotalVisibleMemorySize = Int32.Parse(info[indexOfSubstring + 1]) / 1024;
+            GetMonitorSystem.TotalVisibleMemorySize = TotalVisibleMemorySize.ToString();
+
+            subString = "FreePhysicalMemory";
+            indexOfSubstring = info.IndexOf(subString);
+            int FreePhysicalMemory = Int32.Parse(info[indexOfSubstring + 1]) / 1024;
+            GetMonitorSystem.FreePhysicalMemory = FreePhysicalMemory.ToString();
+
+            Users user = new Users();
+            if (User.Identity.IsAuthenticated)
+            {
+                user = db.Users
+                   .Where(t => t.Email == User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value)
+                   .FirstOrDefault();
+            }
+
+
+            MonitorSystem monitorSystem = new MonitorSystem();
+            monitorSystem.IdSender = user.IdUser;
+            monitorSystem.Address = address;
+            monitorSystem.Data = GetMonitorSystem.Data;
+            monitorSystem.Loadpercentage = GetMonitorSystem.LoadPercentage;
+            monitorSystem.Numberofcores = GetMonitorSystem.NumberOfCores;
+            monitorSystem.Numberoflogicalprocessors = GetMonitorSystem.NumberOfLogicalProcessors;
+            monitorSystem.Totalvisiblememorysize = GetMonitorSystem.TotalVisibleMemorySize;
+            monitorSystem.Freephysicalmemory = GetMonitorSystem.FreePhysicalMemory;
+            monitorSystem.DateMonitorSystem = DateTime.Now;
+
+            db.MonitorSystem.Add(monitorSystem);
+            await db.SaveChangesAsync();
+
+
+
+            return new JsonResult(GetMonitorSystem);
+        }
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

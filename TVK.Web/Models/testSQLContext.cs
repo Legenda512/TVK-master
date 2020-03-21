@@ -22,6 +22,7 @@ namespace TVK.Web
         public virtual DbSet<ContactInformation> ContactInformation { get; set; }
         public virtual DbSet<Data> Data { get; set; }
         public virtual DbSet<HistorySysteminfo> HistorySysteminfo { get; set; }
+        public virtual DbSet<MonitorSystem> MonitorSystem { get; set; }
         public virtual DbSet<Pc> Pc { get; set; }
         public virtual DbSet<PersonalInformation> PersonalInformation { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
@@ -211,6 +212,64 @@ namespace TVK.Web
                     .WithMany(p => p.HistorySysteminfo)
                     .HasForeignKey(d => d.IdSysteminfo)
                     .HasConstraintName("history_systeminfo_id_systeminfo_fkey");
+            });
+
+
+            modelBuilder.Entity<MonitorSystem>(entity =>
+            {
+                entity.HasKey(e => e.IdMonitorSystem)
+                    .HasName("monitor_system_pkey");
+
+                entity.ToTable("monitor_system");
+
+                entity.Property(e => e.IdMonitorSystem).HasColumnName("id_monitor_system");
+
+                entity.Property(e => e.Address)
+                    .IsRequired()
+                    .HasColumnName("address")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Data)
+                    .IsRequired()
+                    .HasColumnName("data")
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.Freephysicalmemory)
+                    .IsRequired()
+                    .HasColumnName("freephysicalmemory")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.IdSender).HasColumnName("id_sender");
+
+                entity.Property(e => e.Loadpercentage)
+                    .IsRequired()
+                    .HasColumnName("loadpercentage")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.Numberofcores)
+                    .IsRequired()
+                    .HasColumnName("numberofcores")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.Numberoflogicalprocessors)
+                    .IsRequired()
+                    .HasColumnName("numberoflogicalprocessors")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.Totalvisiblememorysize)
+                    .IsRequired()
+                    .HasColumnName("totalvisiblememorysize")
+                    .HasMaxLength(30);
+
+                entity.HasOne(d => d.IdSenderNavigation)
+                    .WithMany(p => p.MonitorSystem)
+                    .HasForeignKey(d => d.IdSender)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("monitor_system_id_sender_fkey");
+
+                entity.Property(e => e.DateMonitorSystem).HasColumnName("date_monitor_system");
+
+
             });
 
             modelBuilder.Entity<Pc>(entity =>

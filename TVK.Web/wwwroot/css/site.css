@@ -54,3 +54,49 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.block-1 {
+	float:left;
+	right:0;
+	top:0;
+	width:70%;
+	height:100%;
+	text-align: center;
+	margin-bottom: 60px;
+}
+.block-2 {
+	float:right;
+	right:0;
+	top:0;
+	width:30%;
+	height:100%;
+	text-align: center;
+}
+
+a {
+    display: inline-block;
+    color:black;
+    line-height: 1;
+    text-decoration:none;
+    cursor: pointer;
+    position:relative;
+}
+a:after {
+    background-color: black;
+    display: block;
+    content: "";
+    height: 2px;
+    width: 0%;
+    left:50%;
+    position:absolute;
+    -webkit-transition: width .3s ease-in-out;
+    -moz--transition: width .3s ease-in-out;
+    transition: width .3s ease-in-out;
+    -webkit-transform:translateX(-50%);
+    -moz-transform:translateX(-50%);
+    transform:translateX(-50%);
+}
+a:hover:after,
+a:focus:after {
+    width: 100%;
+}

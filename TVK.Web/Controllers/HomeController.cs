@@ -30,9 +30,14 @@ namespace TVK.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(TvkCommand tvkCommand)
+        [Route("get_tvkcommand/{data_tvkcommand}")]
+        public async Task<IActionResult> Post(string data_tvkcommand)
         {
+            string[] data_tvkcommand_mas = data_tvkcommand.Split(' ');
+            TvkCommand tvkCommand = new TvkCommand();
+            tvkCommand.Address = data_tvkcommand_mas[0];
+            tvkCommand.Command = data_tvkcommand_mas[1];
+
             string ip_PC = tvkCommand.Address;
             tvkCommand.Address = "http://" + ip_PC + "/api/command";
 
@@ -169,8 +174,8 @@ namespace TVK.Web.Controllers
 
             user.Command.Add(command);
             await db.SaveChangesAsync();
-            return View("Index", tvkCommand);
-            }
+            return new JsonResult(tvkCommand);
+        }
 
 
 

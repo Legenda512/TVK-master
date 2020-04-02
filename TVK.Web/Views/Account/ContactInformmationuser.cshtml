@@ -4,26 +4,17 @@
     ViewData["Title"] = "Контактная информация";
 }
 
-<h1>Контактная информация</h1>
 
-<form asp-action="ContactInformmationuser" asp-controller="Account" asp-anti-forgery="true">
-    <div class="validation" asp-validation-summary="ModelOnly"></div>
-    <div>
-        <div>
-            <label asp-for="PhoneOrEmail">Введите контактную почту или сотовй номер</label><br />
-            <input type="text" asp-for="PhoneOrEmail" />
-            <span asp-validation-for="PhoneOrEmail" />
-        </div>
+<div id="login-form">
+    <h1>Контактная информация</h1>
 
-        <div>
-            <label asp-for="Comment">Введите комментарий</label><br />
-            <input type="text" asp-for="Comment" />
-            <span asp-validation-for="Comment" />
-        </div>
+    <fieldset>
+        <form asp-action="ContactInformmationuser" asp-controller="Account" asp-anti-forgery="true">
+            <input type="text" asp-for="PhoneOrEmail" required value="Контактные данные" onBlur="if(this.value=='')this.value='Контактные данные'" onFocus="if(this.value=='Контактные данные')this.value='' ">
+            <input type="text" asp-for="Comment" required value="Комментарий" onBlur="if(this.value=='')this.value='Комментарий'" onFocus="if(this.value=='Комментарий')this.value='' ">
+            <input type="submit" value="Запомнить">
+        </form>
+    </fieldset>
 
-        <div>
-            <input type="submit" value="Запомнить" />
-        </div>
-    </div>
-</form>
+</div>
 

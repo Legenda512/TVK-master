@@ -8,45 +8,88 @@
 }
 
     <div class="text-center">
-        <form method="post" action="screenrecorder">
-            <p>
-                <label for="address">Address:</label> <input type="text" name="address" id="address" value="@address" />
-            </p>
-            <p>
-                @*<label for="command">Command:</label> <input type="text" name="command" id="command" value="@command" />*@
 
+        <div class="text-center">
+            <h3 class="display-4">IP адреса компьютеров</h3>
+            <table class="mytable">
+                <tbody>
+                    @foreach (var pc in PC_address)
+                    {
+                        <tr><td>@pc.IpAddress </td><td>@pc.NamePc</td></tr>
+                    }
+                </tbody>
+            </table>
+            <br>
+        </div>
+
+        <fieldset>
+            <legend>Просмотр рабочего стола</legend>
+            <form method="post" action="screenrecorder">
+
+                <label for="address">Address:</label>
+                <select name="address" id="address">
+                    @foreach (var pc in PC_address)
+                    {
+                        <option title="@pc.NamePc">@pc.IpAddress</option>
+                    }
+                </select>
                 <label for="command">Command: </label>
                 <select name="command" id="command">
                     <option>start</option>
                     <option>stop</option>
                 </select>
 
-            </p>
-            <p>
                 <input type="button" value="Run" id="click" />
-            </p>
-        </form>
-        <br />
-        <br />
-        <table class="mytable">
-            <thead>
-                <tr><th>IP адреса компьютеров</th></tr>
-            </thead>
-            <tbody>
-                @foreach (var pc in PC_address)
-                {
-                    <tr><td>@pc.IpAddress </td><td>@pc.NamePc</td></tr>
-                }
-            </tbody>
-        </table>
+                <br />
+            </form>
+        </fieldset>
         <br />
         <br />
 
     </div>
 
-    <img src='recived/screenshot-1.jpeg' id="image" style="max-width: 100%;" />
+    <img src='~/white.jpg' id="image" style="max-width: 100%;" />
 
 
+    <script type="text/javascript">
+        var total_pics_num = 100000; // колличество изображений
+        var interval = 1500;    // задержка между изображениями
+        var time_out = 1500;       // задержка смены изображений
+        var i = 0;
+        var timeout;
+        var flag = false;
 
+        function fade_to_next() {
+            i = i + 1;
+            var image_next = 'recived/screenshot-' + i + '.jpeg';
+            var ava = document.getElementById('image');
+            ava.setAttribute('src', image_next);
+            timeout = setTimeout("fade_to_next()", time_out);
+        }
 
+        function run() {
+            var data = new FormData();
+            data.append("Command", document.getElementById("command").value);
+            data.append("Address", document.getElementById("address").value);
+            fetch(window.location.href, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    //'Content-Type': 'application/json'
+                },
+                body: data
+            });
 
+            if (document.getElementById("command").value === "stop" || flag === true) {
+                clearTimeout(timeout);
+                flag = false;
+            } else {
+                timeout = setTimeout(fade_to_next, interval);
+                flag = true;
+
+            }
+        }
+
+        document.getElementById("click").addEventListener('click', run);
+
+    </script>

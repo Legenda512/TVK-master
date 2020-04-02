@@ -3,50 +3,37 @@
     ViewData["Title"] = "Графики";
 }
 
-<b>Построение Графиков:</b><br />
-<form asp-action="LineCommandData" asp-controller="Charts" asp-anti-forgery="true" method="get">
-    <div class="validation" asp-validation-summary="ModelOnly" />
-    <div>
-        <div class="form-group">
-            <label asp-for="StartDate">Введите начальную дату построения графика по дате (в формате dd:mm:yyyy)</label>
-            <input type="text" name="StartDate" asp-for="StartDate" />
-            <span asp-validation-for="StartDate" />
-        </div>
-        <div class="form-group">
-            <label asp-for="FinishDate">Введите конечную дату построения графика по дате (в формате dd:mm:yyyy)</label>
-            <input type="text" name="FinishDate" asp-for="FinishDate" />
-            <span asp-validation-for="FinishDate" />
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Построить график команд по дате" class="btn" />
-        </div>
-    </div>
-</form>
-<a asp-controller="Charts" asp-action="BarUser">График пользователей</a><br />
-<a asp-controller="Charts" asp-action="BarUserRoles">График пользователей по ролям</a><br />
-<a asp-controller="Charts" asp-action="PieCommand">Часто используемые команды</a><br />
 
-<b>Построение Отчетов:</b><br />
-<form asp-action="CreatePDF" asp-controller="DocumentHistoryComand" asp-anti-forgery="true" method="get">
-    <div class="validation" asp-validation-summary="ModelOnly" />
-    <div>
-        <div class="form-group">
-            <label asp-for="StartDate">Введите начальную дату построения графика по дате (в формате dd:mm:yyyy)</label>
-            <input type="text" name="StartDate" asp-for="StartDate" />
-            <span asp-validation-for="StartDate" />
-        </div>
-        <div class="form-group">
-            <label asp-for="FinishDate">Введите конечную дату построения графика по дате (в формате dd:mm:yyyy)</label>
-            <input type="text" name="FinishDate" asp-for="FinishDate" />
-            <span asp-validation-for="FinishDate" />
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Построить историю команд" class="btn" />
-        </div>
-    </div>
-</form>
-<a asp-controller="Document" asp-action="CreatePDF">Список пользователей</a><br />
-<a asp-controller="DocumentComand" asp-action="CreatePDF">Список команд</a><br />
-<a asp-controller="DocumentSysteminfo" asp-action="CreatePDF">Список компьютеров и информации о них</a><br />
-<a asp-controller="DocumentPCCommand" asp-action="CreatePDF">Компьютеры и команды выполненные на нем</a><br />
-<a asp-controller="DocumentLeadTimeComand" asp-action="CreatePDF">Среднее время выполнения команд</a><br />
+<div id="chart-form">
+    <h1>Построение Графиков</h1>
+    <fieldset>
+        <form asp-action="LineCommandData" asp-controller="Charts" asp-anti-forgery="true" method="get">
+            <input type="text" asp-for="StartDate" required value="Начало dd:mm:yyyy" onBlur="if(this.value=='')this.value='Начало dd:mm:yyyy'" onFocus="if(this.value=='Начало dd:mm:yyyy')this.value='' ">
+            <input type="text" asp-for="FinishDate" required value="Конец dd:mm:yyyy" onBlur="if(this.value=='')this.value='Конец dd:mm:yyyy'" onFocus="if(this.value=='Конец dd:mm:yyyy')this.value='' ">
+            <input type="submit" value="Построить график команд по дате">
+            <footer class="clearfix">
+                <p><a asp-controller="Charts" asp-action="BarUser">График пользователей</a></p>
+                <p><a asp-controller="Charts" asp-action="BarUserRoles">График пользователей по ролям</a></p>
+                <p><a asp-controller="Charts" asp-action="PieCommand">Часто используемые команды</a></p>
+            </footer>
+        </form>
+    </fieldset>
+</div>
+
+<div id="chart-form" >
+    <h1>Построение Отчетов</h1>
+    <fieldset>
+        <form asp-action="CreatePDF" asp-controller="DocumentHistoryComand" asp-anti-forgery="true" method="get">
+            <input type="text" asp-for="StartDate" required value="Начало dd:mm:yyyy" onBlur="if(this.value=='')this.value='Начало dd:mm:yyyy'" onFocus="if(this.value=='Начало dd:mm:yyyy')this.value='' ">
+            <input type="text" asp-for="FinishDate" required value="Конец dd:mm:yyyy" onBlur="if(this.value=='')this.value='Конец dd:mm:yyyy'" onFocus="if(this.value=='Конец dd:mm:yyyy')this.value='' ">
+            <input type="submit" value="Построить историю команд">
+            <footer class="clearfix">
+                <p><a asp-controller="Document" asp-action="CreatePDF">Список пользователей</a></p>
+                <p><a asp-controller="DocumentComand" asp-action="CreatePDF">Список команд</a></p>
+                <p><a asp-controller="DocumentSysteminfo" asp-action="CreatePDF">Список компьютеров и информации о них</a></p>
+                <p><a asp-controller="DocumentPCCommand" asp-action="CreatePDF">Компьютеры и команды выполненные на нем</a></p>
+                <p><a asp-controller="DocumentLeadTimeComand" asp-action="CreatePDF">Среднее время выполнения команд</a></p>
+            </footer>
+        </form>
+    </fieldset>
+</div>

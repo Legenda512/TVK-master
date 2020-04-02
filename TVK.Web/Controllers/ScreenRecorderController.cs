@@ -7,6 +7,7 @@ using TVK.Web.Models;
 using Flurl.Http;
 using TVK.Client.Daemon.Web.Models;
 using System.Threading;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TVK.Web.Controllers
 {
@@ -16,6 +17,8 @@ namespace TVK.Web.Controllers
         static bool thread = false;
         Thread mythreadGetFile = new Thread(GetPicture.Get_Picture);
         Thread mythreadDeleteFile = new Thread(GetPicture.Delet_Picture);
+
+        [Authorize(Roles = "1,2")]
         public IActionResult Index()
         {
             return View();

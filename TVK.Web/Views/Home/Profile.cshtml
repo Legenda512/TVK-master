@@ -16,59 +16,66 @@
     .FirstOrDefault();
 }
 
-<h1>Профиль</h1>
-
-@if (user.PersonalInformation.Count == 0)
-{
-    <a asp-action="PersonalInfromationuser" asp-controller="Account">Заполнить персональную информацию</a>
-}
-<br>
-<a asp-action="ContactInformmationuser" asp-controller="Account">Заполнить контактную информацию</a>
-<br>
-<a asp-action="IndexCharts" asp-controller="Charts">Построить графики</a>
-
-<table>
-    <thead>
-        <tr><th>Пользователь</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Ник пользователя: </td><td>@user.Nameusers</td></tr>
-        <tr><td>Email: </td><td>@user.Email</td></tr>
-    </tbody>
-</table>
-
-<table>
-    <thead>
-        <tr><th>Персональная информация</th></tr>
-    </thead>
-    <tbody>
-        @foreach (var personal in user.PersonalInformation)
-        {
-            <tr><td>Пол: </td><td>@personal.Gender</td></tr>
-            <tr><td>Возраст: </td><td>@personal.Age</td></tr>
-            <tr><td>Фамилия: </td><td>@personal.Lastname</td></tr>
-            <tr><td>Имя: </td><td>@personal.Firstname</td></tr>
-            <tr><td>Отчество: </td><td>@personal.Secondname</td></tr>
-
-        }
-        @foreach (var role in user.Roles)
-        {
-            <tr><td>Роль: </td><td>@role.IdBackgroundroleNavigation.DescriptionRole</td></tr>
-        }
-
-        @foreach (var contact in user.ContactInformation)
-        {
-            <tr><td>Контактная информация: </td><td>@contact.PhoneOrEmail</td></tr>
-            <tr><td>Комментарий: </td><td>@contact.Comment</td></tr>
-        }
-
-    </tbody>
-</table>
-
-<a asp-action="Logout" asp-controller="Account">Выйти</a>
+<link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css" />
 
 
+<div class="container">
+    <div id="main">
 
+        <div class="row" id="real-estates-detail">
 
+            <div class="col-lg-8 col-md-8 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <ul id="myTab" class="nav nav-pills">
+                            @if (user.PersonalInformation.Count == 0)
+                            {
+                                <li class="active"><a asp-action="PersonalInfromationuser" asp-controller="Account" data-toggle="tab">Заполнить персональную информацию</a></li>
+                            }
+                            <li><a asp-action="ContactInformmationuser" asp-controller="Account">Заполнить контактную информацию</a></li>
+                            <li><a asp-action="IndexCharts" asp-controller="Charts">Построить графики</a></li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <hr>
+                            <div class="tab-pane fade active in" id="detail">
+                                <h4>Профиль</h4>
+                                <table class="table table-th-block">
+                                    <tbody>
+                                        <tr><td class="active">Никнейм пользователя:</td><td>@user.Nameusers</td></tr>
+                                        <tr><td class="active">Email:</td><td>@user.Email</td></tr>
+                                        @foreach (var personal in user.PersonalInformation)
+                                        {
+                                            <tr><td class="active">Пол: </td><td>@personal.Gender</td></tr>
+                                            <tr><td class="active">Возраст: </td><td>@personal.Age</td></tr>
+                                            <tr><td class="active">Фамилия: </td><td>@personal.Lastname</td></tr>
+                                            <tr><td class="active">Имя: </td><td>@personal.Firstname</td></tr>
+                                            <tr><td class="active">Отчество: </td><td>@personal.Secondname</td></tr>
 
+                                        }
+                                        @foreach (var role in user.Roles)
+                                        {
+                                            <tr><td class="active">Роль: </td><td>@role.IdBackgroundroleNavigation.DescriptionRole</td></tr>
+                                        }
 
+                                        @foreach (var contact in user.ContactInformation)
+                                        {
+                                            <tr><td class="active">Контактная информация: </td><td>@contact.PhoneOrEmail</td></tr>
+                                            <tr><td class="active">Комментарий: </td><td>@contact.Comment</td></tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <ul id="myTab" class="nav nav-pills">
+                            <li><a asp-action="Logout" asp-controller="Account">Выйти</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /.main -->

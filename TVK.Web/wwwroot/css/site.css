@@ -59,7 +59,7 @@ body {
 	float:left;
 	right:0;
 	top:0;
-	width:70%;
+	width:50%;
 	height:100%;
 	text-align: center;
 	margin-bottom: 60px;
@@ -68,7 +68,7 @@ body {
 	float:right;
 	right:0;
 	top:0;
-	width:30%;
+	width:50%;
 	height:100%;
 	text-align: center;
 }
@@ -100,3 +100,183 @@ a:hover:after,
 a:focus:after {
     width: 100%;
 }
+
+
+#login-form {
+	margin: 150px auto;
+	width: 300px;
+}
+
+#login-form h1 {
+	background-color: #282830;
+	border-radius: 5px 5px 0 0;
+	color: #fff;
+	font-size: 14px;
+	padding: 20px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+#login-form fieldset {
+	background: #fff;
+	border-radius: 0 0 5px 5px;
+	padding: 20px;
+	position: relative;
+}
+
+#login-form fieldset:before {
+	background-color: #fff;
+	content: "";
+	height: 8px;
+	left: 50%;
+	margin: -4px 0 0 -4px;
+	position: absolute;
+	top: 0;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+	width: 8px;
+}
+
+#login-form input {
+	font-size: 14px;
+}
+
+#login-form input[type="email"],
+#login-form input[type="password"],
+#login-form input[type="text"] {
+	border: 1px solid #dcdcdc;
+	padding: 12px 10px;
+	width: 260px;
+}
+
+#login-form input[type="email"] {
+	border-top: none;
+	border-radius: 3px 3px 0 0;
+}
+
+#login-form input[type="password"] {
+	border-top: none;
+	border-radius: 0px 0px 3px 3px;
+}
+
+#login-form input[type="submit"] {
+	background: #282830;
+	float: right;
+	font-weight: bold;
+	margin-top: 20px;
+	
+	border-radius: 5px 5px 0 0;
+	color: #fff;
+	font-size: 12px;
+	padding: 20px;
+	text-align: center;
+	text-transform: uppercase;
+	
+}
+
+#login-form input[type="submit"]:hover { background: #198d98; }
+
+#login-form footer {
+	font-size: 12px;
+	margin-top: 16px;
+}
+
+.info {
+	background: #e5e5e5;
+	border-radius: 50%;
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+	margin: 0 10px 0 0;
+	text-align: center;
+	width: 20px;
+}
+
+
+
+#chart-form {
+	margin-top: 50px;
+	width: 100%;
+}
+
+#chart-form h1 {
+	border-radius: 5px 5px 0 0;
+	color: black;
+	font-size: 17px;
+	padding: 20px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+#chart-form fieldset {
+	background: #dee2e6;
+	border-radius: 15px;
+	padding: 20px;
+	position: relative;
+}
+
+#chart-form fieldset:before {
+	background-color: #fff;
+	content: "";
+	height: 8px;
+	left: 50%;
+	margin: -4px 0 0 -4px;
+	position: absolute;
+	top: 0;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+	width: 8px;
+}
+
+#chart-form input {
+	font-size: 14px;
+}
+
+#chart-form input[type="email"],
+#chart-form input[type="password"],
+#chart-form input[type="text"] {
+	border: 1px solid #dcdcdc;
+	padding: 12px 10px;
+	width: 260px;
+}
+
+#chart-form input[type="email"] {
+	border-top: none;
+	border-radius: 3px 3px 0 0;
+}
+
+#chart-form input[type="password"] {
+	border-top: none;
+	border-radius: 0px 0px 3px 3px;
+}
+
+#chart-form input[type="submit"] {
+	background: #282830;
+	font-weight: bold;
+	margin-top: 20px;
+	
+	border-radius: 15px;
+	color: #fff;
+	font-size: 12px;
+	padding: 12px;
+	text-align: center;
+	text-transform: uppercase;
+	
+}
+
+#chart-form input[type="submit"]:hover { background: #198d98; }
+
+#chart-form footer {
+	margin-top: 16px;
+}
+
+
+
+
+

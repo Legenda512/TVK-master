@@ -6,42 +6,18 @@
 
 <h1>Персональная информация</h1>
 
-<form asp-action="PersonalInfromationuser" asp-controller="Account" asp-anti-forgery="true">
-    <div class="validation" asp-validation-summary="ModelOnly"></div>
-    <div>
-        <div>
-            <label asp-for="Gender">Введите пол</label><br />
-            <input type="text" asp-for="Gender" />
-            <span asp-validation-for="Gender" />
-        </div>
+<div id="login-form">
+    <h1>Персональная информация</h1>
 
-        <div>
-            <label asp-for="Age">Введите возраст</label><br />
-            <input type="text" asp-for="Age" />
-            <span asp-validation-for="Age" />
-        </div>
+    <fieldset>
+        <form asp-action="PersonalInfromationuser" asp-controller="Account" asp-anti-forgery="true">
+            <input type="text" asp-for="Gender" required value="Ваш пол" onBlur="if(this.value=='')this.value='Ваш пол'" onFocus="if(this.value=='Ваш пол')this.value='' ">
+            <input type="text" asp-for="Age" required value="Ваш возраст" onBlur="if(this.value=='')this.value='Ваш возраст'" onFocus="if(this.value=='Ваш возраст')this.value='' ">
+            <input type="text" asp-for="Lastname" required value="Ваша фамилия" onBlur="if(this.value=='')this.value='Ваша фамилия'" onFocus="if(this.value=='Ваша фамилия')this.value='' ">
+            <input type="text" asp-for="Firstname" required value="Ваше имя" onBlur="if(this.value=='')this.value='Ваше имя'" onFocus="if(this.value=='Ваше имя')this.value='' ">
+            <input type="text" asp-for="Secondname" required value="Ваше отчество" onBlur="if(this.value=='')this.value='Ваше отчество'" onFocus="if(this.value=='Ваше отчество')this.value='' ">
+            <input type="submit" value="Запомнить">
+        </form>
+    </fieldset>
 
-        <div>
-            <label asp-for="Lastname">Введите фамилию</label><br />
-            <input type="text" asp-for="Lastname" />
-            <span asp-validation-for="Lastname" />
-        </div>
-        <div>
-            <label asp-for="Firstname">Введите имя</label><br />
-            <input type="text" asp-for="Firstname" />
-            <span asp-validation-for="Firstname" />
-        </div>
-
-        <div>
-            <label asp-for="Secondname">Введите отчество</label><br />
-            <input type="text" asp-for="Secondname" />
-            <span asp-validation-for="Secondname" />
-        </div>
-
-        <div>
-            <input type="submit" value="Запомнить" />
-        </div>
-    </div>
-</form>
-
-
+</div>

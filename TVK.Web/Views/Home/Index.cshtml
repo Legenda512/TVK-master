@@ -18,68 +18,73 @@
     var backgroundCommand = db.BackgroundCommand.ToList();
     var PC_address = db.Pc.ToList();
     List<string> data = new List<string>();
-
-    DateTime start = new DateTime();
 }
 
 
-<div class="text-center">
-    <h1 class="display-4">Welcome @user.Nameusers</h1>
-    <br>
-    <table class="mytable">
-        <thead>
-            <tr><th>IP адреса компьютеров</th></tr>
-        </thead>
-        <tbody>
-            @foreach (var pc in PC_address)
-            {
-                <tr><td>@pc.IpAddress </td><td>@pc.NamePc</td></tr>
-            }
-        </tbody>
-    </table>
-    <br>
-</div>
+    <div class="text-center">
+        <h3 class="display-4">IP адреса компьютеров</h3>
+        <table class="mytable">
+            <tbody>
+                @foreach (var pc in PC_address)
+                {
+                    <tr><td>@pc.IpAddress </td><td>@pc.NamePc</td></tr>
+                }
+            </tbody>
+        </table>
+        <br>
+    </div>
 
-<div class="block-1">
-    
-    <fieldset>
-        <legend>Json выполнение команды</legend>
-        <form>
-            
-            <label for="address">Address:</label> <input type="text" name="address" id="address_tvkcommand" value="@address" />
-            <label for="command" id="command_tvkcommand">Command: </label>
-            <select name="command" id="tvkcommand">
+    <div class="block-1">
+
+        <fieldset>
+            <legend>Json выполнение команды</legend>
+            <form>
+
+                <label for="address">Address:</label>
+                <select name="address" id="address_tvkcommand">
+                    @foreach (var pc in PC_address)
+                    {
+                        <option title="@pc.NamePc">@pc.IpAddress</option>
+                    }
+                </select>
+                <label for="command" id="command_tvkcommand">Command: </label>
+                <select name="command" id="tvkcommand">
+                    @foreach (var bakcommand in backgroundCommand)
+                    {
+                        <option title="@bakcommand.Help">@bakcommand.Command</option>
+                    }
+                </select>
+                <input type="button" value="Выполнить" id="button_tvkcommand" />
+            </form>
+        </fieldset>
+
+        <br />
+        <table class="mytable"  style= "text-align: left;">
+            <thead>
+                <tr><th>Команды</th></tr>
+            </thead>
+            <tbody>
                 @foreach (var bakcommand in backgroundCommand)
                 {
-                    <option title="@bakcommand.Help">@bakcommand.Command</option>
+                    <tr><td>@bakcommand.Command </td><td>@bakcommand.Help</td></tr>
                 }
-            </select>
-            <input type="button" value="Выполнить" id="button_tvkcommand" />
-            <br />
-            <span id="result"> </span>
-        </form>
-    </fieldset>
-
-    <br />
-    <table class="mytable">
-        <thead>
-            <tr><th>Команды</th></tr>
-        </thead>
-        <tbody>
-            @foreach (var bakcommand in backgroundCommand)
-            {
-                <tr><td>@bakcommand.Command </td><td>@bakcommand.Help</td></tr>
-            }
-        </tbody>
-    </table>
-    <br />
-</div>
+            </tbody>
+        </table>
+        <br />
+        <span id="result"> </span>
+    </div>
 
 <div class="block-2">
         <fieldset>
             <legend>Json systeminfo</legend>
             <form>
-                Address:<input type="text" value="" id="address_systeminfo" />
+                <label for="address_systeminfo">Address:</label>
+                <select name="address_systeminfo" id="address_systeminfo">
+                    @foreach (var pc in PC_address)
+                    {
+                        <option title="@pc.NamePc">@pc.IpAddress</option>
+                    }
+                </select>
                 <input type="button" value="Выполнить" id="button_Get_systeminfo" />
                 <br />
                 <span id="result_systeminfo"> </span>
@@ -90,7 +95,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
-    console.log("hello json");
     $(document).ready(function () {
         $('#button_Get_systeminfo').click(function () {
             var address = $('#address_systeminfo').val();
@@ -104,7 +108,6 @@
                     s += '<br>Количество потоков: ' + result.numberOfLogicalProcessors;
                     s += '<br>Количество оперативной памяти MB: ' + result.totalVisibleMemorySize;
                     s += '<br>Количество свободной оперативной памяти MB: ' + result.freePhysicalMemory;
-                    s += '<br>------------------';
                     $('#result_systeminfo').html(s);
                 }
             });

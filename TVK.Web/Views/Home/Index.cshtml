@@ -20,6 +20,7 @@
     List<string> data = new List<string>();
 }
 
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css" />
 
     <div class="text-center">
         <h3 class="display-4">IP адреса компьютеров</h3>
@@ -27,7 +28,7 @@
             <tbody>
                 @foreach (var pc in PC_address)
                 {
-                    <tr><td>@pc.IpAddress </td><td>@pc.NamePc</td></tr>
+                    <tr><td style="padding-right:20px">@pc.IpAddress</td><td>@pc.NamePc</td></tr>
                 }
             </tbody>
         </table>
@@ -36,61 +37,79 @@
 
     <div class="block-1">
 
-        <fieldset>
-            <legend>Json выполнение команды</legend>
-            <form>
+        <div id="form">
+            <h1>Отправка команды</h1>
+            <fieldset>
+                <form>
+                    <label for="address">Address:</label>
+                    <select class="select-css" name="address" id="address_tvkcommand">
+                        @foreach (var pc in PC_address)
+                        {
+                            <option title="@pc.NamePc">@pc.IpAddress</option>
+                        }
+                    </select>
+                    <label for="command" id="command_tvkcommand">Command: </label>
+                    <select class="select-css" name="command" id="tvkcommand">
+                        @foreach (var bakcommand in backgroundCommand)
+                        {
+                            <option title="@bakcommand.Help">@bakcommand.Command</option>
+                        }
+                    </select>
+                    <input type="button" value="Выполнить" id="button_tvkcommand" />
+                </form>
+            </fieldset>
+        </div>
 
-                <label for="address">Address:</label>
-                <select name="address" id="address_tvkcommand">
-                    @foreach (var pc in PC_address)
-                    {
-                        <option title="@pc.NamePc">@pc.IpAddress</option>
-                    }
-                </select>
-                <label for="command" id="command_tvkcommand">Command: </label>
-                <select name="command" id="tvkcommand">
-                    @foreach (var bakcommand in backgroundCommand)
-                    {
-                        <option title="@bakcommand.Help">@bakcommand.Command</option>
-                    }
-                </select>
-                <input type="button" value="Выполнить" id="button_tvkcommand" />
-            </form>
-        </fieldset>
 
-        <br />
-        <table class="mytable"  style= "text-align: left;">
-            <thead>
-                <tr><th>Команды</th></tr>
-            </thead>
-            <tbody>
-                @foreach (var bakcommand in backgroundCommand)
-                {
-                    <tr><td>@bakcommand.Command </td><td>@bakcommand.Help</td></tr>
-                }
-            </tbody>
-        </table>
+        <div class="row" id="real-estates-detail">
+            <div class="col-lg-8 col-md-8 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div id="myTabContent" class="tab-content" style="width: 150%;">
+                            <hr>
+                            <div class="tab-pane fade active in" id="detail">
+                                <h4>Команды</h4>
+                                <table class="table table-th-block">
+                                    <tbody>
+                                        @foreach (var bakcommand in backgroundCommand)
+                                        {
+                                            <tr><td>@bakcommand.Command </td><td>@bakcommand.Help</td></tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <br />
         <span id="result"> </span>
     </div>
 
-<div class="block-2">
-        <fieldset>
-            <legend>Json systeminfo</legend>
-            <form>
-                <label for="address_systeminfo">Address:</label>
-                <select name="address_systeminfo" id="address_systeminfo">
-                    @foreach (var pc in PC_address)
-                    {
-                        <option title="@pc.NamePc">@pc.IpAddress</option>
-                    }
-                </select>
-                <input type="button" value="Выполнить" id="button_Get_systeminfo" />
-                <br />
-                <span id="result_systeminfo"> </span>
-            </form>
-        </fieldset>
-</div>
+    <div class="block-2">
+
+        <div id="form">
+            <h1>Информация о производительности</h1>
+            <fieldset>
+                <form>
+                    <label for="address_systeminfo">Address:</label>
+                    <select name="address_systeminfo" id="address_systeminfo">
+                        @foreach (var pc in PC_address)
+                        {
+                            <option title="@pc.NamePc">@pc.IpAddress</option>
+                        }
+                    </select>
+                    <input type="button" value="Выполнить" id="button_Get_systeminfo" />
+                    <br />
+                    <span id="result_systeminfo"> </span>
+                </form>
+            </fieldset>
+        </div>
+
+    </div>
         
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

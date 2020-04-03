@@ -6,7 +6,7 @@
     testSQLContext db = new testSQLContext();
     var PC_address = db.Pc.ToList();
 }
-
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css" />
     <div class="text-center">
 
         <div class="text-center">
@@ -15,40 +15,42 @@
                 <tbody>
                     @foreach (var pc in PC_address)
                     {
-                        <tr><td>@pc.IpAddress </td><td>@pc.NamePc</td></tr>
+                        <tr><td style="padding-right:20px">@pc.IpAddress </td><td>@pc.NamePc</td></tr>
                     }
                 </tbody>
             </table>
             <br>
         </div>
 
-        <fieldset>
-            <legend>Просмотр рабочего стола</legend>
-            <form method="post" action="screenrecorder">
 
-                <label for="address">Address:</label>
-                <select name="address" id="address">
-                    @foreach (var pc in PC_address)
-                    {
-                        <option title="@pc.NamePc">@pc.IpAddress</option>
-                    }
-                </select>
-                <label for="command">Command: </label>
-                <select name="command" id="command">
-                    <option>start</option>
-                    <option>stop</option>
-                </select>
+        <div id="form">
+            <h1>Просмотр удаленного рабочего стола</h1>
+            <fieldset>
+                <form method="post" action="screenrecorder">
 
-                <input type="button" value="Run" id="click" />
-                <br />
-            </form>
-        </fieldset>
-        <br />
-        <br />
+                    <label for="address">Address:</label>
+                    <select name="address" id="address">
+                        @foreach (var pc in PC_address)
+                        {
+                            <option title="@pc.NamePc">@pc.IpAddress</option>
+                        }
+                    </select>
+                    <label for="command">Command: </label>
+                    <select name="command" id="command">
+                        <option>start</option>
+                        <option>stop</option>
+                    </select>
+
+                    <input type="button" value="Run" id="click" />
+                    <br />
+                </form>
+            </fieldset>
+        </div>
+
 
     </div>
 
-    <img src='~/white.jpg' id="image" style="max-width: 100%;" />
+    <img src='~/white.jpg' id="image" style="max-width: 100%;padding: 15px 0px 60px 0px;" />
 
 
     <script type="text/javascript">

@@ -67,8 +67,9 @@ namespace TVK.Web.Utility
                                     <td>{7}</td>
                                     <td>{8}</td>
                                     <td>{9}</td>
-                                  </tr>", user.Nameusers, user.Email, personal.Lastname, personal.Firstname, personal.Secondname, personal.Gender, 
-                                  personal.Age, backrole.DescriptionRole, contact.PhoneOrEmail, contact.Comment);
+                                  </tr>", user?.Nameusers ?? "не установлено", user?.Email ?? "не установлено", personal?.Lastname ?? "не установлено", personal?.Firstname ?? "не установлено", 
+                                  personal?.Secondname ?? "не установлено", personal?.Gender ?? "не установлено", personal?.Age ?? 0, backrole?.DescriptionRole ?? "не установлено", 
+                                  contact?.PhoneOrEmail ?? "не установлено", contact?.Comment ?? "не установлено");
             }
 
 
@@ -350,5 +351,53 @@ namespace TVK.Web.Utility
         }
 
 
+       
+
+        public static string GetHTMLStringMonitorSystem()
+        {
+
+            List<MonitorSystem> monitorSystems = db.MonitorSystem.ToList();
+
+            var sb = new StringBuilder();
+            sb.Append(@"
+                        <html>
+                            <head>
+                            </head>
+                            <body>
+                                <div class='header'><h1>Мониторинг компьютеров</h1></div>
+                                <table align='center'>
+                                    <tr>
+                                        <th>Адрес</th>
+                                        <th>Дата</th>
+                                        <th>Загрузка процессора</th>
+                                        <th>Число ядер</th>
+                                        <th>Число потоков</th>
+                                        <th>Всего опертивной памяти</th>
+                                        <th>Свободной оперативной памяти</th>
+                                    </tr>");
+
+            foreach (var monitorSystem in monitorSystems)
+            {
+
+                sb.AppendFormat(@"<tr>
+                                    <td>{0}</td>
+                                    <td>{1}</td>
+                                    <td>{2}</td>
+                                    <td>{3}</td>
+                                    <td>{4}</td>
+                                    <td>{5}</td>
+                                    <td>{6}</td>
+                                    </tr>", monitorSystem.Address, monitorSystem.DateMonitorSystem, monitorSystem.Loadpercentage, monitorSystem.Numberofcores,
+                                    monitorSystem.Numberoflogicalprocessors, monitorSystem.Totalvisiblememorysize, monitorSystem.Freephysicalmemory);
+            }
+
+
+            sb.Append(@"
+                                </table>
+                            </body>
+                        </html>");
+
+            return sb.ToString();
+        }
     }
 }

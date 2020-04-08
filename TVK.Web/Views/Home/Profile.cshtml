@@ -30,10 +30,10 @@
                         <ul id="myTab" class="nav nav-pills">
                             @if (user.PersonalInformation.Count == 0)
                             {
-                                <li class="active"><a asp-action="PersonalInfromationuser" asp-controller="Account" data-toggle="tab">Заполнить персональную информацию</a></li>
+                                <li><a asp-action="PersonalInfromationuser" asp-controller="Account">Заполнить персональную информацию</a></li>
                             }
                             <li><a asp-action="ContactInformmationuser" asp-controller="Account">Заполнить контактную информацию</a></li>
-                            <li><a asp-action="IndexCharts" asp-controller="Charts">Построить графики</a></li>
+                            <li><a asp-action="IndexCharts" asp-controller="Charts">Отчеты и графики</a></li>
                         </ul>
                         <div id="myTabContent" class="tab-content">
                             <hr>

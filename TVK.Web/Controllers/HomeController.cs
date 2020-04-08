@@ -164,7 +164,7 @@ namespace TVK.Web.Controllers
 
             Command command = new Command
             {
-                IdSender = 1,
+                IdSender = user.IdUser,
                 IdRecipient = user.IdUser,
                 Time = DateTime.Now,
                 IdCommandBackgroundCommand = backgroundCommand.IdBackgroundCommand,

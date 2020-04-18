@@ -13,5 +13,13 @@ namespace TVK.Web.ViewModels
 
         [Required(ErrorMessage = "Не указана конечная дата")]
         public string FinishDate { get; set; }
+
+        [Required(ErrorMessage = "Не указан IP адрес")]
+        public string IP_Address_loadpercentage { get; set; }
+
+
+        [Required(ErrorMessage = "Не указан IP адрес")]
+        public string IP_Address_freepsycisal { get; set; }
+        
     }
 }

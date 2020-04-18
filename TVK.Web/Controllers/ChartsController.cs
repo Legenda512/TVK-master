@@ -129,6 +129,72 @@ namespace TVK.Web.Controllers
             return View(a);
         }
 
+        [HttpGet("LineMonitorSystem_loadpercentage")]
+        public IActionResult LineMonitorSystem_loadpercentage(string IP_Address_loadpercentage)
+        {
+            List<MonitorSystem> monitorSystems = db.MonitorSystem.ToList();
+
+            List<Pc> pc = db.Pc.Where(x => x.IpAddress == IP_Address_loadpercentage).ToList();
+
+            List<MonitorSystem> monitorSystems_one_pc = null;
+
+            foreach (var pc_one in pc)
+            {
+                monitorSystems_one_pc = monitorSystems.Where(x => x.Address == pc_one.IpAddress).ToList();
+            }
+
+            
+            var lstModel = new List<SimpleReportViewModel>();
+
+
+
+            foreach (var monitorSystem in monitorSystems_one_pc)
+            {
+                lstModel.Add(new SimpleReportViewModel
+                {
+                    DimensionOne = monitorSystem.DateMonitorSystem.ToString(),
+                    Quantity = Int32.Parse(monitorSystem.Loadpercentage)
+                });
+            }
+            var a = lstModel.OrderBy(x => DateTime.Parse(x.DimensionOne));
+            ViewData["XLabels"] = Newtonsoft.Json.JsonConvert.SerializeObject(a.Select(x => x.DimensionOne).ToList());
+            ViewData["YValues"] = Newtonsoft.Json.JsonConvert.SerializeObject(a.Select(x => x.Quantity).ToList());
+            return View(a);
+        }
+
+        [HttpGet("LineMonitorSystem_freephycisal")]
+        public IActionResult LineMonitorSystem_freephycisal(string IP_Address_freepsycisal)
+        {
+            List<MonitorSystem> monitorSystems = db.MonitorSystem.ToList();
+
+            List<Pc> pc = db.Pc.Where(x => x.IpAddress == IP_Address_freepsycisal).ToList();
+
+            List<MonitorSystem> monitorSystems_one_pc = null;
+
+            foreach (var pc_one in pc)
+            {
+                monitorSystems_one_pc = monitorSystems.Where(x => x.Address == pc_one.IpAddress).ToList();
+            }
+
+
+            var lstModel = new List<SimpleReportViewModel>();
+
+
+
+            foreach (var monitorSystem in monitorSystems_one_pc)
+            {
+                lstModel.Add(new SimpleReportViewModel
+                {
+                    DimensionOne = monitorSystem.DateMonitorSystem.ToString(),
+                    Quantity = Int32.Parse(monitorSystem.Freephysicalmemory)
+                });
+            }
+            var a = lstModel.OrderBy(x => DateTime.Parse(x.DimensionOne));
+            ViewData["XLabels"] = Newtonsoft.Json.JsonConvert.SerializeObject(a.Select(x => x.DimensionOne).ToList());
+            ViewData["YValues"] = Newtonsoft.Json.JsonConvert.SerializeObject(a.Select(x => x.Quantity).ToList());
+            return View(a);
+        }
+
         public IActionResult PieCommand()
         {
             List<Command> commands = db.Command.ToList();

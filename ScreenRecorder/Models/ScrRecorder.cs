@@ -95,7 +95,7 @@ namespace ScreenRecorder.Models
             //    DeletePath(dir);
             //}
 
-            Directory.Delete(targetDir, false);
+            //Directory.Delete(targetDir, false);
         }
 
         //Delete all files except the one specified:
@@ -178,7 +178,7 @@ namespace ScreenRecorder.Models
                 bitmap.Dispose();
 
                 //отправка изображения
-                TcpClient client = new TcpClient("127.0.0.1", 20000);
+                TcpClient client = new TcpClient("192.168.50.229", 6000);
                 using (FileStream inputStream = File.OpenRead(name))
                 {
                     using (NetworkStream outputStream = client.GetStream())

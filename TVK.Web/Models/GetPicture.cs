@@ -12,42 +12,52 @@ namespace TVK.Web.Models
     public class GetPicture
     {
         public static string folder = Environment.CurrentDirectory + "\\wwwroot\\recived";
+		public static Int32 port = 6000;
+		public static IPAddress localAddr = IPAddress.Parse("192.168.50.229");
 
-        public static void Get_Picture()
+		public static TcpListener listener = new TcpListener(localAddr, port);
+
+		public static void Get_Picture()
         {
 			
-			TcpListener listener = new TcpListener(IPAddress.Any, 20000);
 			listener.Start();
 			while (true)
 			{
-				TcpClient client = listener.AcceptTcpClient();
-				using (NetworkStream inputStream = client.GetStream())
+				try
 				{
-					using (BinaryReader reader = new BinaryReader(inputStream))
+					TcpClient client = listener.AcceptTcpClient();
+					using (NetworkStream inputStream = client.GetStream())
 					{
-						string filename = reader.ReadString();
-						long lenght = reader.ReadInt64();
-						using (FileStream outputStream = File.Open(Path.Combine(folder, filename), FileMode.Create))
+						using (BinaryReader reader = new BinaryReader(inputStream))
 						{
-							long totalBytes = 0;
-							int readBytes = 0;
-							byte[] buffer = new byte[2048];
-
-							do
+							string filename = reader.ReadString();
+							long lenght = reader.ReadInt64();
+							using (FileStream outputStream = File.Open(Path.Combine(folder, filename), FileMode.Create))
 							{
-								readBytes = inputStream.Read(buffer, 0, buffer.Length);
-								outputStream.Write(buffer, 0, readBytes);
-								totalBytes += readBytes;
-							} while (client.Connected && totalBytes < lenght);
-							Console.WriteLine("Принят файл " + filename + " Размер " + totalBytes);
+								long totalBytes = 0;
+								int readBytes = 0;
+								byte[] buffer = new byte[2048];
+
+								do
+								{
+									readBytes = inputStream.Read(buffer, 0, buffer.Length);
+									outputStream.Write(buffer, 0, readBytes);
+									totalBytes += readBytes;
+								} while (client.Connected && totalBytes < lenght);
+								Console.WriteLine("Принят файл " + filename + " Размер " + totalBytes);
+							}
 						}
+
 					}
+					client.Close();
+				}
+				catch
+				{
 
 				}
-				client.Close();
-				
-				
+
 			}
+
 		}
 
         public static void Delet_Picture()
@@ -60,7 +70,9 @@ namespace TVK.Web.Models
                 File.Delete(file);
             }
 
-        }
+			listener.Stop();
+
+		}
 
 
 

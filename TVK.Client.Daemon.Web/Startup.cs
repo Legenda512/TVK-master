@@ -37,7 +37,7 @@ namespace TVK.Client.Daemon.Web
             string myIP = RegisterIPMiddleware.GetIP(); // Получаем свой IP
             using (HttpClient client = new HttpClient())
             {
-                client.GetAsync("http://192.168.56.1:5050/registerIP?IP=" + myIP).Wait(); //Сообщаем серверу свой IP
+                client.GetAsync("http://192.168.50.229:5050/registerIP?IP=" + myIP).Wait(); //Сообщаем серверу свой IP
             }
             
 

@@ -8,9 +8,29 @@ namespace TVK.Web.Controllers
 {
     public class RegisterIPController : Controller
     {
+        private testSQLContext db;
+        public RegisterIPController(testSQLContext context)
+        {
+            db = context;
+        }
+
         public static List<string> computer_IP = new List<string>();
         public IActionResult Index(string IP)
         {
+            IP += ":5000";
+            Pc pc = new Pc();
+            
+            pc = db.Pc.Where(x => x.IpAddress == IP).FirstOrDefault();
+            
+            if(pc == null)
+            {
+                pc.IpAddress = IP;
+                pc.IdOsPc = 1;
+                db.Pc.Add(pc);
+                db.SaveChangesAsync();
+            }
+            
+
             computer_IP.Add(IP);
             return Ok();
         }

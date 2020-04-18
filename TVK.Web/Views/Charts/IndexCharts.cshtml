@@ -1,6 +1,8 @@
 ﻿@model TVK.Web.ViewModels.Interval
 @{
     ViewData["Title"] = "Графики";
+    testSQLContext db = new testSQLContext();
+    var PC_address = db.Pc.ToList();
 }
 
 
@@ -17,6 +19,27 @@
                 <p><a asp-controller="Charts" asp-action="PieCommand">Часто используемые команды</a></p>
             </footer>
         </form>
+        <form asp-action="LineMonitorSystem_loadpercentage" asp-controller="Charts" asp-anti-forgery="true" method="get">
+            <label>Address:</label>
+            <select asp-for="IP_Address_loadpercentage">
+                @foreach (var pc in PC_address)
+                    {
+                <option title="@pc.NamePc">@pc.IpAddress</option>
+                    }
+            </select>
+            <input type="submit" value="Построить график нагрузки процессора">
+        </form>
+        <form asp-action="LineMonitorSystem_freephycisal" asp-controller="Charts" asp-anti-forgery="true" method="get">
+            <label>Address:</label>
+            <select asp-for="IP_Address_freepsycisal">
+                @foreach (var pc in PC_address)
+                    {
+                <option title="@pc.NamePc">@pc.IpAddress</option>
+                    }
+            </select>
+            <input type="submit" value="Построить график свободной оперативной памяти">
+        </form>
+
     </fieldset>
 </div>
 

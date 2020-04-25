@@ -20,7 +20,7 @@
             </footer>
         </form>
         <form asp-action="LineMonitorSystem_loadpercentage" asp-controller="Charts" asp-anti-forgery="true" method="get">
-            <label>Address:</label>
+            <label>Адрес:</label>
             <select asp-for="IP_Address_loadpercentage">
                 @foreach (var pc in PC_address)
                     {
@@ -30,7 +30,7 @@
             <input type="submit" value="Построить график нагрузки процессора">
         </form>
         <form asp-action="LineMonitorSystem_freephycisal" asp-controller="Charts" asp-anti-forgery="true" method="get">
-            <label>Address:</label>
+            <label>Адрес:</label>
             <select asp-for="IP_Address_freepsycisal">
                 @foreach (var pc in PC_address)
                     {

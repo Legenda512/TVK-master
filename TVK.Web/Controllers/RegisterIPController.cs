@@ -21,15 +21,14 @@ namespace TVK.Web.Controllers
             Pc pc = new Pc();
             
             pc = db.Pc.Where(x => x.IpAddress == IP).FirstOrDefault();
-            
-            if(pc == null)
+ 
+            if (pc == null)
             {
-                pc.IpAddress = IP;
-                pc.IdOsPc = 1;
+                pc = new Pc { IpAddress = IP, NamePc = "1", IdOsPc = 1 };
                 db.Pc.Add(pc);
-                db.SaveChangesAsync();
+                db.SaveChanges();
             }
-            
+
 
             computer_IP.Add(IP);
             return Ok();
